@@ -32,3 +32,11 @@ Các layer PNG hiện tại được kế thừa từ bộ tài nguyên tách k�
 - `assets/map-layers/manifest.json` mô tả thứ tự ghép từ dưới lên trên.
 - Không dùng `ikigai-world-map-v9.png` làm nền hiển thị.
 - Khi cập nhật GitHub, hãy **gộp (merge) thư mục `assets`** để giữ các tài nguyên khác như `assets/jft/` nếu repository đang có.
+
+
+## IKIGAI WORLD 9.2.2 — Layered Map Repair
+
+- Bản đồ ghép trực tiếp từ 7 PNG độc lập trong `assets/map-layers/` và 7 PNG công trình trong `assets/buildings/`.
+- Manifest duy nhất: `assets/map-layers/manifest.json`.
+- Các bản sao layer bị đặt nhầm trong `assets/buildings/` đã được dọn.
+- CSS layered-map cũ bị nối lặp đã được thay bằng một khối quy tắc duy nhất.

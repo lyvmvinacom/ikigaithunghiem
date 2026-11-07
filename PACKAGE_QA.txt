@@ -1,29 +1,35 @@
-IKIGAI WORLD 9.2.1 — TRUE LAYERED MAP REPAIR
-===========================================
+IKIGAI WORLD 9.2.2 — SOURCE AUDIT & LAYERED MAP REPAIR
+=====================================================
 
-Nguồn: IKIGAI_WORLD_9_2_TRUE_LAYERED_MAP (1).zip do người dùng cung cấp.
-Đây là bản sửa trực tiếp trên mã nguồn 9.2, không thay bằng dự án khác.
+Nguồn kiểm tra: ikigaithunghiem-main.zip do người dùng tải lên.
+Đã chỉnh trực tiếp trên đúng source này.
 
-Đã xử lý:
-1. Chuẩn hóa manifest: BUILDINGS/ -> buildings/ đúng với thư mục thực tế assets/buildings/ (GitHub Pages phân biệt chữ hoa/thường).
-2. Giữ 7 ảnh layer PNG độc lập trong assets/map-layers/ theo canvas 1600x1000.
-3. Giữ 7 ảnh công trình PNG độc lập trong assets/buildings/.
-4. Bổ sung CSS xếp lớp thống nhất ở cuối style.css để tránh các quy tắc CSS cũ ghi đè thứ tự layer.
-5. Bảo đảm 7 layer cảnh quan nằm dưới 7 công trình; vùng bấm hotspot nằm trên công trình; HUD và công cụ vẫn ở lớp cao hơn.
-6. Tăng phiên bản cache của style.css và app.js trong index.html lên 9.2.1 để trình duyệt tải bản mới.
-7. Không dùng ảnh composite ikigai-world-map-v9.png làm nền trong index.html.
-8. Không chỉnh app.js, supabase-schema.sql, dữ liệu câu hỏi N5, ảnh phòng hoặc logic đăng nhập.
+Các lỗi xác nhận trong ZIP nguồn:
+- assets/buildings/ chứa bản sao 7 file layer cảnh quan (PNG/SVG), gây trùng lặp và nhầm vị trí.
+- assets/map-layers/manifest.json còn ghi BUILDINGS/ (không thống nhất đường dẫn).
+- assets/buildings/manifest.json là bản manifest trùng, khác phiên bản với manifest trong map-layers.
+- style.css chứa nhiều khối sửa layered-map nối chồng từ các lần trước, có quy tắc z-index mâu thuẫn.
 
-Kiểm tra tự động:
-- JavaScript app.js: PASS (node --check).
-- Tham chiếu file cục bộ trong index.html/style.css: PASS (0 đường dẫn thiếu).
-- Layer PNG: PASS (đủ 7 ảnh, giải mã được, mỗi ảnh 1600x1000).
-- Building PNG: PASS (đủ 7 ảnh riêng).
-- HTML có đúng 7 thẻ map-layer và 7 building-art: PASS.
-- HTML không tham chiếu ảnh composite làm nền: PASS.
-- manifest trỏ đúng assets/buildings/: PASS.
-- Kiểm tra ZIP CRC sau đóng gói: thực hiện riêng trước khi bàn giao.
+Đã sửa:
+1. Giữ 7 layer cảnh quan tại assets/map-layers/.
+2. Giữ 7 công trình PNG tại assets/buildings/.
+3. Xóa các bản sao layer cảnh quan đặt nhầm trong assets/buildings/ và manifest trùng tại thư mục này.
+4. Chuẩn hóa manifest duy nhất tại assets/map-layers/ và đổi tên thư mục công trình thành buildings/.
+5. Dọn các khối CSS sửa cũ bị nối lặp, thay bằng một khối bố cục layered-map chuẩn duy nhất.
+6. Đặt thứ tự: 7 layer cảnh quan -> hiệu ứng -> 7 ảnh công trình/hotspot -> nhân vật/HUD.
+7. Cập nhật cache-busting thành 9.2.2 cho index.html, app.js, CSS và ảnh bản đồ.
+8. Không thay app.js, schema Supabase, ngân hàng câu hỏi, ảnh phòng, ảnh nhân vật hoặc logic game.
 
-Giới hạn kiểm tra:
-- Đã kiểm tra tĩnh mã nguồn và tài nguyên trong ZIP. Chưa thể xác nhận đăng nhập Supabase, đồng bộ đa thiết bị hoặc GitHub Pages trực tiếp từ môi trường đóng gói offline.
-- ZIP nguồn người dùng cung cấp không có assets/jft/. Khi cập nhật repository đang có JFT, hãy chép đè các file dự án nhưng MERGE thư mục assets, không xóa các thư mục/tệp JFT hiện có.
+Kiểm tra sau sửa:
+- index.html chứa 7 tham chiếu map-layer và 7 tham chiếu building-art: PASS.
+- Tất cả 14 file ảnh được tham chiếu tồn tại: PASS.
+- 7 layer PNG đều đọc được, đúng kích thước 1600x1000: PASS.
+- 7 building PNG đều đọc được: PASS.
+- Không còn layer PNG/SVG trùng trong assets/buildings/: PASS.
+- JavaScript app.js qua node --check: PASS.
+- Không có tham chiếu ảnh composite map trong index.html/app.js/style.css: PASS.
+- Kiểm tra CRC toàn bộ ZIP sau đóng gói: PASS.
+
+Lưu ý:
+- Đây là kiểm tra mã nguồn/tài nguyên tĩnh. Chưa thể xác nhận tương tác thực tế trên GitHub Pages hoặc dịch vụ Supabase từ môi trường đóng gói.
+- Source ZIP người dùng gửi không có assets/jft/. Khi chép vào repository có JFT, cần gộp assets để giữ assets/jft hiện có.
