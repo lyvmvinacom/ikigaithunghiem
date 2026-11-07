@@ -1,0 +1,28 @@
+IKIGAI WORLD 9.1 — ART UPGRADE PACKAGE QA
+========================================
+Source: IKIGAI_WORLD_9_0_COMPLETE_REPAIRED(1).zip (user-confirmed source)
+
+Changes in 9.1:
+1. Replaced the visible flat legacy map/layer composite with a newly generated, high-detail Japanese fantasy garden island map artwork at 1600x1000.
+2. Kept all seven real HTML hotspots clickable and repositioned them to the seven visible facilities in the new map.
+3. Hid old duplicate building PNG overlays and legacy flat map layers so buildings are not double-rendered.
+4. Kept map actors container and existing rule: no player sprites on the overworld; characters appear inside rooms.
+5. Preserved map chat/exit controls, HUD, login, room navigation, multiplayer and existing Supabase logic.
+6. Upscaled all seven room backgrounds to 2x dimensions with Lanczos resampling and mild contrast/color/sharpness enhancement. Existing room art content preserved.
+7. Added responsive layout overrides for landscape desktop and portrait mobile (stage rotation retained).
+8. Bumped CSS/JS cache versions to 9.1-commercial-art.
+
+Validation:
+- Node.js syntax check of app.js: PASS.
+- Local asset reference scan across HTML/CSS: PASS (0 missing references).
+- Seven map hotspots present: PASS.
+- Seven room artwork references present: PASS.
+- New map image decodes at 1600x1000: PASS.
+- All seven room images decode at 2x dimensions: PASS.
+- ZIP integrity test: run after packaging.
+
+Important limitations:
+- The new overworld artwork is a single high-resolution illustrated background, not a set of independently animated scenery sprites. The old source layer assets remain in the package for future extraction/rebuild but are hidden in the new visual presentation to avoid the flat look and duplicate buildings.
+- Room backgrounds are high-resolution static illustrations; live players, speech bubbles, chat and controls remain interactive above them. This package does not claim full 3D or frame-by-frame animation.
+- Live Supabase authentication, multi-device synchronization and GitHub Pages deployment cannot be fully verified offline. Existing project URL, public client key, schema, app logic and question bank are retained from the supplied V9.0 source.
+- This source archive did not include assets/jft/. If a JFT asset folder exists in the live repository, preserve it when uploading this package (merge assets rather than deleting unrelated files).
