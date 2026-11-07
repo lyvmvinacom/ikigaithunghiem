@@ -581,14 +581,11 @@
 }
 
 
-/* IKIGAI WORLD 9.2.3 — single authoritative layered-map layout */
+/* IKIGAI WORLD 9.2.3 — full-resolution clean background + 7 independent building layers */
 .map-world-stage{
-  position:absolute!important;left:50%!important;top:50%!important;
-  transform:translate(-50%,-50%)!important;
-  width:min(100vw,160vh)!important;
-  aspect-ratio:16/10!important;height:auto!important;
+  width:min(100vw,177.68vh)!important;
+  aspect-ratio:1672/941!important;height:auto!important;
   isolation:isolate!important;overflow:hidden!important;
-  border:2px solid #f4d79e!important;border-radius:12px!important;
   background:#8fd5ed!important;
 }
 .map-world-stage .world-layers,
@@ -598,23 +595,16 @@
 }
 .map-world-stage .world-layers{z-index:0!important}
 .map-world-stage .map-art-stack{z-index:0!important}
-.map-world-stage .map-layer{
+.map-world-stage .map-background{
   position:absolute!important;inset:0!important;width:100%!important;height:100%!important;
   display:block!important;object-fit:fill!important;opacity:1!important;visibility:visible!important;
-  mix-blend-mode:normal!important;pointer-events:none!important;
+  pointer-events:none!important;
 }
-.map-world-stage .map-layer:nth-child(1){z-index:1!important}
-.map-world-stage .map-layer:nth-child(2){z-index:2!important}
-.map-world-stage .map-layer:nth-child(3){z-index:3!important}
-.map-world-stage .map-layer:nth-child(4){z-index:4!important}
-.map-world-stage .map-layer:nth-child(5){z-index:5!important}
-.map-world-stage .map-layer:nth-child(6){z-index:6!important}
-.map-world-stage .map-layer:nth-child(7){z-index:7!important}
 .map-world-stage .map-atmosphere,
 .map-world-stage .map-water-glow,
 .map-world-stage .map-petals,
 .map-world-stage .map-fireflies{
-  position:absolute!important;inset:0!important;pointer-events:none!important;z-index:8!important;
+  display:none!important;
 }
 .map-world-stage>.map-hotspots{
   position:absolute!important;inset:0!important;width:100%!important;height:100%!important;
@@ -624,28 +614,38 @@
   position:absolute!important;display:block!important;object-fit:contain!important;
   transform:translate(-50%,-50%)!important;pointer-events:none!important;
   user-select:none!important;-webkit-user-drag:none!important;z-index:1!important;
-  filter:drop-shadow(0 9px 8px rgba(18,35,31,.42))!important;
+  filter:drop-shadow(0 7px 6px rgba(18,35,31,.32))!important;
 }
-.map-world-stage .building-class{left:22%!important;top:23%!important;width:26%!important;height:26%!important}
-.map-world-stage .building-arena{left:50%!important;top:22%!important;width:27%!important;height:26%!important}
-.map-world-stage .building-n4{left:76%!important;top:27%!important;width:25%!important;height:26%!important}
-.map-world-stage .building-n5{left:20.5%!important;top:48%!important;width:26%!important;height:26%!important}
-.map-world-stage .building-jft{left:79.5%!important;top:48%!important;width:26%!important;height:26%!important}
-.map-world-stage .building-gym{left:27%!important;top:74%!important;width:25%!important;height:26%!important}
-.map-world-stage .building-director{left:72.5%!important;top:74%!important;width:25%!important;height:26%!important}
-.map-world-stage .hotspot{position:absolute!important;z-index:2!important;pointer-events:auto!important;touch-action:manipulation!important;border:2px solid transparent!important;background:transparent!important}
-.map-world-stage .hotspot-class{left:9%!important;top:12.5%!important;width:26%!important;height:21%!important}
-.map-world-stage .hotspot-arena{left:36.5%!important;top:11.5%!important;width:27%!important;height:21%!important}
-.map-world-stage .hotspot-n4{left:63.5%!important;top:16.5%!important;width:25%!important;height:21%!important}
-.map-world-stage .hotspot-n5{left:7.5%!important;top:37.5%!important;width:26%!important;height:21%!important}
-.map-world-stage .hotspot-jft{left:66.5%!important;top:37.5%!important;width:26%!important;height:21%!important}
-.map-world-stage .hotspot-gym{left:14.5%!important;top:63.5%!important;width:25%!important;height:21%!important}
-.map-world-stage .hotspot-director{left:60%!important;top:63.5%!important;width:25%!important;height:21%!important}
+/* Tọa độ được căn theo đúng 7 khu đất trong bản đồ nền mới. */
+.map-world-stage .building-class{left:27%!important;top:24%!important;width:24%!important;height:28%!important}
+.map-world-stage .building-arena{left:50%!important;top:24%!important;width:25%!important;height:29%!important}
+.map-world-stage .building-n4{left:75%!important;top:25%!important;width:24%!important;height:28%!important}
+.map-world-stage .building-n5{left:24%!important;top:49%!important;width:24%!important;height:28%!important}
+.map-world-stage .building-jft{left:76%!important;top:49%!important;width:24%!important;height:28%!important}
+.map-world-stage .building-gym{left:27%!important;top:76%!important;width:24%!important;height:28%!important}
+.map-world-stage .building-director{left:73%!important;top:76%!important;width:24%!important;height:28%!important}
+.map-world-stage .hotspot{
+  position:absolute!important;z-index:2!important;pointer-events:auto!important;
+  touch-action:manipulation!important;border:2px solid transparent!important;
+  background:transparent!important;border-radius:18px!important;
+}
+.map-world-stage .hotspot:hover{border-color:#ffe7a8aa!important;background:#fff1!important;box-shadow:0 0 24px #fff8!important}
+.map-world-stage .hotspot-class{left:15%!important;top:10%!important;width:24%!important;height:28%!important}
+.map-world-stage .hotspot-arena{left:37.5%!important;top:10%!important;width:25%!important;height:29%!important}
+.map-world-stage .hotspot-n4{left:63%!important;top:11%!important;width:24%!important;height:28%!important}
+.map-world-stage .hotspot-n5{left:12%!important;top:35%!important;width:24%!important;height:29%!important}
+.map-world-stage .hotspot-jft{left:64%!important;top:35%!important;width:24%!important;height:29%!important}
+.map-world-stage .hotspot-gym{left:15%!important;top:62%!important;width:24%!important;height:29%!important}
+.map-world-stage .hotspot-director{left:61%!important;top:62%!important;width:24%!important;height:29%!important}
 .map-world-stage #mapActors{z-index:10!important}
 .map-world-stage .map-hud{z-index:16!important}
 .map-world-stage .map-tools{z-index:18!important}
 .map-world-stage .map-hint{z-index:16!important}
-@media(orientation:portrait){
- .map-world-stage{width:min(100vh,160vw)!important;aspect-ratio:16/10!important;height:auto!important;transform:translate(-50%,-50%) rotate(90deg)!important}
+@media(max-width:700px){
+ .map-world-stage .building-art{filter:drop-shadow(0 4px 4px rgba(18,35,31,.32))!important}
+ .map-world-stage .hotspot{border-radius:10px!important}
 }
-/* end 9.2.2 layered-map layout */
+@media(orientation:portrait){
+ .map-world-stage{width:min(100vh,177.68vw)!important;aspect-ratio:1672/941!important;height:auto!important;transform:translate(-50%,-50%) rotate(90deg)!important}
+}
+/* end 9.2.3 layered-map layout */

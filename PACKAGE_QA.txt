@@ -1,35 +1,26 @@
-IKIGAI WORLD 9.2.2 — SOURCE AUDIT & LAYERED MAP REPAIR
+IKIGAI WORLD 9.2.3 — BACKGROUND + 7 BUILDING LAYERS
 =====================================================
 
-Nguồn kiểm tra: ikigaithunghiem-main.zip do người dùng tải lên.
-Đã chỉnh trực tiếp trên đúng source này.
+Các thay đổi:
+1. Dùng assets/ikigai-world-background-no-buildings.png làm Background duy nhất.
+2. Giữ nguyên kích thước ảnh nền 6688x3764 px; hiển thị theo canvas 1672x941.
+3. Thay toàn bộ 7 ảnh công trình trong assets/buildings/ bằng 7 ảnh PNG người dùng cung cấp.
+4. Sắp xếp 7 layer theo bố cục đã thống nhất:
+   - Trên trái: Lớp học IKIGAI
+   - Trên giữa: Đấu trường
+   - Trên phải: Phòng luyện thi N4
+   - Giữa trái: Phòng luyện thi N5
+   - Giữa phải: Phòng luyện thi JFT
+   - Dưới trái: Phòng Gym
+   - Dưới phải: Phòng Trà IKIGAI
+5. Cập nhật hotspot tương ứng để giữ thao tác nhấn vào từng công trình.
+6. Cập nhật nhãn khu vực Phòng Trà IKIGAI.
+7. Giữ nguyên app.js ngoài tên khu vực trà, Supabase schema, ngân hàng câu hỏi, ảnh phòng và nhân vật.
 
-Các lỗi xác nhận trong ZIP nguồn:
-- assets/buildings/ chứa bản sao 7 file layer cảnh quan (PNG/SVG), gây trùng lặp và nhầm vị trí.
-- assets/map-layers/manifest.json còn ghi BUILDINGS/ (không thống nhất đường dẫn).
-- assets/buildings/manifest.json là bản manifest trùng, khác phiên bản với manifest trong map-layers.
-- style.css chứa nhiều khối sửa layered-map nối chồng từ các lần trước, có quy tắc z-index mâu thuẫn.
-
-Đã sửa:
-1. Giữ 7 layer cảnh quan tại assets/map-layers/.
-2. Giữ 7 công trình PNG tại assets/buildings/.
-3. Xóa các bản sao layer cảnh quan đặt nhầm trong assets/buildings/ và manifest trùng tại thư mục này.
-4. Chuẩn hóa manifest duy nhất tại assets/map-layers/ và đổi tên thư mục công trình thành buildings/.
-5. Dọn các khối CSS sửa cũ bị nối lặp, thay bằng một khối bố cục layered-map chuẩn duy nhất.
-6. Đặt thứ tự: 7 layer cảnh quan -> hiệu ứng -> 7 ảnh công trình/hotspot -> nhân vật/HUD.
-7. Cập nhật cache-busting thành 9.2.2 cho index.html, app.js, CSS và ảnh bản đồ.
-8. Không thay app.js, schema Supabase, ngân hàng câu hỏi, ảnh phòng, ảnh nhân vật hoặc logic game.
-
-Kiểm tra sau sửa:
-- index.html chứa 7 tham chiếu map-layer và 7 tham chiếu building-art: PASS.
-- Tất cả 14 file ảnh được tham chiếu tồn tại: PASS.
-- 7 layer PNG đều đọc được, đúng kích thước 1600x1000: PASS.
-- 7 building PNG đều đọc được: PASS.
-- Không còn layer PNG/SVG trùng trong assets/buildings/: PASS.
-- JavaScript app.js qua node --check: PASS.
-- Không có tham chiếu ảnh composite map trong index.html/app.js/style.css: PASS.
-- Kiểm tra CRC toàn bộ ZIP sau đóng gói: PASS.
-
-Lưu ý:
-- Đây là kiểm tra mã nguồn/tài nguyên tĩnh. Chưa thể xác nhận tương tác thực tế trên GitHub Pages hoặc dịch vụ Supabase từ môi trường đóng gói.
-- Source ZIP người dùng gửi không có assets/jft/. Khi chép vào repository có JFT, cần gộp assets để giữ assets/jft hiện có.
+Kiểm tra:
+- 1 ảnh background sạch + 7 PNG công trình riêng.
+- Tất cả ảnh PNG đọc được, nền trong suốt.
+- Kích thước background 6688x3764.
+- Canvas game cập nhật tỷ lệ 1672:941.
+- Hotspot đủ 7 khu vực.
+- JavaScript cần qua node --check (được kiểm tra trong bước đóng gói nếu môi trường có Node).

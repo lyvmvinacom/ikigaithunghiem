@@ -40,3 +40,9 @@ Các layer PNG hiện tại được kế thừa từ bộ tài nguyên tách k�
 - Manifest duy nhất: `assets/map-layers/manifest.json`.
 - Các bản sao layer bị đặt nhầm trong `assets/buildings/` đã được dọn.
 - CSS layered-map cũ bị nối lặp đã được thay bằng một khối quy tắc duy nhất.
+
+
+## Bản đồ 9.2.3
+- Background mới: `assets/ikigai-world-background-no-buildings.png` (6688x3764).
+- 7 công trình PNG độc lập trong `assets/buildings/`, có thể thay đổi vị trí/kích thước bằng CSS.
+- Bố cục canvas 1672x941, các hotspot tương ứng vẫn hoạt động.
