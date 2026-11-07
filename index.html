@@ -1,16 +1,16 @@
-<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><meta name="theme-color" content="#17313b"><title>IKIGAI WORLD 9.1 – Japanese Learning Adventure</title><link rel="stylesheet" href="style.css?v=9.1-commercial-art"><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script></head><body>
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><meta name="theme-color" content="#17313b"><title>IKIGAI WORLD 9.2 – True Layered World</title><link rel="stylesheet" href="style.css?v=9.2.1-true-layers"><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script></head><body>
 <main id="game">
 <section id="mapScene" class="map-scene">
  <div class="map-world-stage">
  <div class="world-layers" aria-hidden="true">
   <div class="map-art-stack" aria-label="Cảnh quan IKIGAI WORLD">
-   <img class="map-layer" src="assets/map-layers/01_terrain.png?v=9.0" alt="">
-   <img class="map-layer" src="assets/map-layers/02_water.png?v=9.0" alt="">
-   <img class="map-layer" src="assets/map-layers/03_paths_plaza.png?v=9.0" alt="">
-   <img class="map-layer" src="assets/map-layers/04_entrance_gate.png?v=9.0" alt="">
-   <img class="map-layer" src="assets/map-layers/05_vegetation.png?v=9.0" alt="">
-   <img class="map-layer" src="assets/map-layers/06_lanterns_bridges_props.png?v=9.0" alt="">
-   <img class="map-layer" src="assets/map-layers/07_atmosphere_effects.png?v=9.0" alt="">
+   <img class="map-layer" src="assets/map-layers/01_terrain.png?v=9.2" alt="">
+   <img class="map-layer" src="assets/map-layers/02_water.png?v=9.2" alt="">
+   <img class="map-layer" src="assets/map-layers/03_paths_plaza.png?v=9.2" alt="">
+   <img class="map-layer" src="assets/map-layers/04_entrance_gate.png?v=9.2" alt="">
+   <img class="map-layer" src="assets/map-layers/05_vegetation.png?v=9.2" alt="">
+   <img class="map-layer" src="assets/map-layers/06_lanterns_bridges_props.png?v=9.2" alt="">
+   <img class="map-layer" src="assets/map-layers/07_atmosphere_effects.png?v=9.2" alt="">
   </div>
   <div class="map-atmosphere"></div><div class="map-water-glow"></div>
   <div class="map-petals"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
@@ -18,13 +18,13 @@
  </div>
  <div id="mapActors" class="actors"></div>
  <div class="map-hotspots">
-  <img class="building-art building-class" src="assets/buildings/01_lop-hoc-ikigai.png?v=9.0" alt="" draggable="false">
-  <img class="building-art building-arena" src="assets/buildings/02_dau-truong.png?v=9.0" alt="" draggable="false">
-  <img class="building-art building-n5" src="assets/buildings/03_phong-luyen-thi-n5.png?v=9.0" alt="" draggable="false">
-  <img class="building-art building-n4" src="assets/buildings/04_phong-luyen-thi-n4.png?v=9.0" alt="" draggable="false">
-  <img class="building-art building-jft" src="assets/buildings/05_phong-luyen-thi-jft.png?v=9.0" alt="" draggable="false">
-  <img class="building-art building-gym" src="assets/buildings/06_phong-gym.png?v=9.0" alt="" draggable="false">
-  <img class="building-art building-director" src="assets/buildings/07_phong-giam-doc.png?v=9.0" alt="" draggable="false">
+  <img class="building-art building-class" src="assets/buildings/01_lop-hoc-ikigai.png?v=9.2" alt="" draggable="false">
+  <img class="building-art building-arena" src="assets/buildings/02_dau-truong.png?v=9.2" alt="" draggable="false">
+  <img class="building-art building-n5" src="assets/buildings/03_phong-luyen-thi-n5.png?v=9.2" alt="" draggable="false">
+  <img class="building-art building-n4" src="assets/buildings/04_phong-luyen-thi-n4.png?v=9.2" alt="" draggable="false">
+  <img class="building-art building-jft" src="assets/buildings/05_phong-luyen-thi-jft.png?v=9.2" alt="" draggable="false">
+  <img class="building-art building-gym" src="assets/buildings/06_phong-gym.png?v=9.2" alt="" draggable="false">
+  <img class="building-art building-director" src="assets/buildings/07_phong-giam-doc.png?v=9.2" alt="" draggable="false">
   <button class="hotspot hotspot-class" data-place="class" aria-label="Lớp học IKIGAI"></button>
   <button class="hotspot hotspot-arena" data-place="arena" aria-label="Đấu trường IKIGAI"></button>
   <button class="hotspot hotspot-n5" data-place="n5" aria-label="Phòng luyện thi N5"></button>
@@ -47,4 +47,4 @@
  <div class="login-tabs"><button class="selected" data-tab="student">🎒 Học viên</button><button data-tab="teacher">👑 Giáo viên</button></div>
  <div id="studentForm"><label>Tên hiển thị trong game</label><input id="studentName" maxlength="24" placeholder="Ví dụ: Minh Anh"><label>Email tài khoản</label><input id="studentEmail" type="email" autocomplete="username" placeholder="email của bạn"><label>Mật khẩu</label><input id="studentPassword" type="password" autocomplete="current-password" placeholder="Tối thiểu 6 ký tự"><div class="gender-pick"><button class="selected" data-gender="male">Nam ♂</button><button data-gender="female">Nữ ♀</button></div><div class="avatar-pick"><button id="avatarPrev">‹</button><img id="avatarPreview" src="assets/characters/male_school.png"><button id="avatarNext">›</button></div><div class="login-actions"><button class="gold" id="studentSignIn">ĐĂNG NHẬP</button><button class="secondary" id="studentSignUp">TẠO TÀI KHOẢN</button></div><button class="guest" id="guestEnter">Vào thử không cần tài khoản</button></div>
  <div id="teacherForm" hidden><label>Email giáo viên</label><input id="teacherEmail" type="email" autocomplete="username"><label>Mật khẩu</label><input id="teacherPassword" type="password" autocomplete="current-password"><button class="gold full" id="teacherSignIn">ĐĂNG NHẬP GIÁO VIÊN</button><p class="small-note">Tài khoản giáo viên cần được cấp role teacher trong Supabase.</p></div><p id="loginStatus" role="status"></p></div></div>
-</main><script src="app.js?v=9.1-commercial-art"></script></body></html>
+</main><script src="app.js?v=9.2.1-true-layers"></script></body></html>

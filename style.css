@@ -633,51 +633,148 @@
  .map-tools{z-index:22}
 }
 
-/* IKIGAI WORLD 9.1 — rebuilt commercial-style overworld art */
-.map-world-stage{
-  width:min(100vw,160vh)!important;
-  aspect-ratio:16/10!important;
-  height:auto!important;
-  isolation:isolate;
-  background:#0c5574 url('assets/map-layers/ikigai-world-map-v9.png?v=9.1') center/100% 100% no-repeat!important;
-  border:2px solid #f8d995!important;
-  border-radius:14px!important;
-  box-shadow:0 14px 44px #061c2dcc,0 0 0 3px #f7e2a466!important;
-}
-.map-world-stage>.world-layers{display:none!important}
-.map-world-stage .map-hotspots{z-index:8!important;pointer-events:none;overflow:hidden}
-.map-world-stage .building-art{display:none!important}
-.map-world-stage .hotspot{z-index:9!important;border:2px solid transparent!important;background:transparent!important;border-radius:22px!important;pointer-events:auto!important;touch-action:manipulation}
-.map-world-stage .hotspot:hover,.map-world-stage .hotspot:focus-visible{border-color:#fff0a8b8!important;background:#fff2!important;box-shadow:0 0 24px #ffe58a99,inset 0 0 18px #fff4!important;outline:none}
-.map-world-stage .hotspot-class{left:13%;top:22%;width:22%;height:18%}
-.map-world-stage .hotspot-arena{left:39%;top:10%;width:22%;height:25%}
-.map-world-stage .hotspot-n4{left:68%;top:14%;width:20%;height:23%}
-.map-world-stage .hotspot-n5{left:13%;top:37%;width:22%;height:23%}
-.map-world-stage .hotspot-jft{left:68%;top:37%;width:20%;height:23%}
-.map-world-stage .hotspot-gym{left:17%;top:59%;width:24%;height:23%}
-.map-world-stage .hotspot-director{left:63%;top:59%;width:25%;height:23%}
-.map-world-stage #mapActors{z-index:10!important}
-.map-world-stage .map-hud{z-index:12!important;top:7px!important;left:10px!important;right:10px!important;pointer-events:none}
-.map-world-stage .map-hud .identity{position:absolute;left:0;top:0;transform:scale(.82);transform-origin:top left}
-.map-world-stage .map-hud .resources{position:absolute;left:8px;top:65px;transform:scale(.82);transform-origin:top left;background:#183d64e8}
-.map-world-stage .map-tools{z-index:15!important;top:7px!important;right:7px!important;gap:6px}
-.map-world-stage .map-tools button{padding:7px 13px!important;border-radius:14px!important;background:linear-gradient(#426b8c,#173c5e)!important;border:2px solid #ffe4a2!important;box-shadow:0 3px #10283c!important;color:#fff!important;font-weight:900}
-.map-world-stage .map-hint{z-index:12!important;bottom:7px!important;background:#18344ddd!important;border:1px solid #ffe4a2;color:#fff6d8}
-@media(orientation:portrait){
- .map-world-stage{width:min(100vh,160vw)!important;aspect-ratio:16/10!important;transform:translate(-50%,-50%) rotate(90deg)!important}
- .map-world-stage .map-hud .identity{transform:scale(.68);}
- .map-world-stage .map-hud .resources{top:48px;transform:scale(.65);}
- .map-world-stage .map-tools{top:7px!important;right:7px!important;bottom:auto!important;transform:scale(.8);transform-origin:top right}
- .map-world-stage .map-hint{font-size:8px;max-width:70%;white-space:normal;text-align:center}
-}
-@media(max-width:700px) and (orientation:landscape){
- .map-world-stage .map-hud .identity{transform:scale(.65)}
- .map-world-stage .map-hud .resources{top:47px;transform:scale(.65)}
- .map-world-stage .map-tools{transform:scale(.78);transform-origin:top right}
-}
 /* Preserve room art as the main scene while all live actors, bubbles and controls stay interactive. */
 .room-scene .interior{background-size:100% 100%!important;background-position:center!important}
 .room-scene .interior:after{z-index:1!important}
 .room-scene .room-actors,.room-scene .station-grid,.room-scene .room-action,.room-scene .speech-room,.room-scene .room-controls{z-index:12!important}
-/* Hide the legacy flat vector layer stack; keep the live actor container available. */
-.map-world-stage .map-art-stack,.map-world-stage .map-atmosphere,.map-world-stage .map-water-glow,.map-world-stage .map-petals,.map-world-stage .map-fireflies{display:none!important}
+
+/* IKIGAI WORLD 9.2 — REAL MULTI-LAYER MAP (no flattened map image) */
+.map-world-stage{
+  background:linear-gradient(180deg,#8fd5ed 0%,#bde9d2 38%,#4b9b72 100%)!important;
+  isolation:isolate!important;
+  overflow:hidden!important;
+}
+.map-world-stage>.world-layers{
+  display:block!important;position:absolute!important;inset:0!important;
+  width:100%!important;height:100%!important;z-index:0!important;
+  overflow:hidden!important;pointer-events:none!important;
+}
+.map-world-stage .map-art-stack{
+  display:block!important;position:absolute!important;inset:0!important;
+  width:100%!important;height:100%!important;z-index:0!important;
+}
+.map-world-stage .map-layer{
+  display:block!important;position:absolute!important;inset:0!important;
+  width:100%!important;height:100%!important;object-fit:fill!important;
+  opacity:1!important;visibility:visible!important;mix-blend-mode:normal;
+}
+.map-world-stage .map-layer:nth-child(1){z-index:1}
+.map-world-stage .map-layer:nth-child(2){z-index:2}
+.map-world-stage .map-layer:nth-child(3){z-index:3}
+.map-world-stage .map-layer:nth-child(4){z-index:4}
+.map-world-stage .map-layer:nth-child(5){z-index:5}
+.map-world-stage .map-layer:nth-child(6){z-index:6}
+.map-world-stage .map-layer:nth-child(7){z-index:11}
+.map-world-stage .map-atmosphere,.map-world-stage .map-water-glow,
+.map-world-stage .map-petals,.map-world-stage .map-fireflies{
+  display:block!important;position:absolute!important;inset:0!important;
+  pointer-events:none!important;z-index:12!important;
+}
+.map-world-stage .map-hotspots{
+  display:block!important;position:absolute!important;inset:0!important;
+  z-index:9!important;pointer-events:none!important;overflow:hidden!important;
+}
+.map-world-stage .building-art{
+  display:block!important;position:absolute!important;object-fit:contain!important;
+  transform:translate(-50%,-50%)!important;pointer-events:none!important;
+  user-select:none!important;-webkit-user-drag:none!important;
+  filter:drop-shadow(0 9px 8px rgba(18,35,31,.42))!important;z-index:8!important;
+}
+.map-world-stage .building-class{left:22%!important;top:23%!important;width:26%!important;height:26%!important}
+.map-world-stage .building-arena{left:50%!important;top:22%!important;width:27%!important;height:26%!important}
+.map-world-stage .building-n4{left:76%!important;top:27%!important;width:25%!important;height:26%!important}
+.map-world-stage .building-n5{left:20.5%!important;top:48%!important;width:26%!important;height:26%!important}
+.map-world-stage .building-jft{left:79.5%!important;top:48%!important;width:26%!important;height:26%!important}
+.map-world-stage .building-gym{left:27%!important;top:74%!important;width:25%!important;height:26%!important}
+.map-world-stage .building-director{left:72.5%!important;top:74%!important;width:25%!important;height:26%!important}
+.map-world-stage .hotspot{z-index:10!important;pointer-events:auto!important;touch-action:manipulation!important;border:2px solid transparent!important;background:transparent!important}
+.map-world-stage .hotspot-class{left:9%!important;top:12.5%!important;width:26%!important;height:21%!important}
+.map-world-stage .hotspot-arena{left:36.5%!important;top:11.5%!important;width:27%!important;height:21%!important}
+.map-world-stage .hotspot-n4{left:63.5%!important;top:16.5%!important;width:25%!important;height:21%!important}
+.map-world-stage .hotspot-n5{left:7.5%!important;top:37.5%!important;width:26%!important;height:21%!important}
+.map-world-stage .hotspot-jft{left:66.5%!important;top:37.5%!important;width:26%!important;height:21%!important}
+.map-world-stage .hotspot-gym{left:14.5%!important;top:63.5%!important;width:25%!important;height:21%!important}
+.map-world-stage .hotspot-director{left:60%!important;top:63.5%!important;width:25%!important;height:21%!important}
+.map-world-stage #mapActors{z-index:13!important}
+.map-world-stage .map-hud{z-index:16!important}
+.map-world-stage .map-tools{z-index:18!important}
+.map-world-stage .map-hint{z-index:16!important}
+@media(orientation:portrait){
+ .map-world-stage{width:min(100vh,160vw)!important;aspect-ratio:16/10!important;transform:translate(-50%,-50%) rotate(90deg)!important}
+}
+/* end 9.2 layered map */
+
+
+/* IKIGAI WORLD 9.2.1 — authoritative true-layer stack.
+   Coordinates use the shared 1600x1000 canvas. No composite map image is used. */
+.map-world-stage{
+  width:min(100vw,160vh)!important;
+  aspect-ratio:16/10!important;
+  height:auto!important;
+  isolation:isolate!important;
+  overflow:hidden!important;
+  background:#8fd5ed!important;
+}
+.map-world-stage>.world-layers{
+  position:absolute!important;inset:0!important;
+  width:100%!important;height:100%!important;
+  display:block!important;z-index:0!important;
+  overflow:hidden!important;pointer-events:none!important;
+}
+.map-world-stage .map-art-stack{
+  position:absolute!important;inset:0!important;
+  width:100%!important;height:100%!important;
+  display:block!important;z-index:0!important;
+  overflow:hidden!important;pointer-events:none!important;
+}
+.map-world-stage .map-layer{
+  position:absolute!important;inset:0!important;
+  display:block!important;width:100%!important;height:100%!important;
+  object-fit:fill!important;opacity:1!important;visibility:visible!important;
+  mix-blend-mode:normal!important;pointer-events:none!important;
+}
+.map-world-stage .map-layer:nth-child(1){z-index:1!important}
+.map-world-stage .map-layer:nth-child(2){z-index:2!important}
+.map-world-stage .map-layer:nth-child(3){z-index:3!important}
+.map-world-stage .map-layer:nth-child(4){z-index:4!important}
+.map-world-stage .map-layer:nth-child(5){z-index:5!important}
+.map-world-stage .map-layer:nth-child(6){z-index:6!important}
+.map-world-stage .map-layer:nth-child(7){z-index:7!important}
+.map-world-stage .map-atmosphere,
+.map-world-stage .map-water-glow,
+.map-world-stage .map-petals,
+.map-world-stage .map-fireflies{
+  position:absolute!important;inset:0!important;
+  pointer-events:none!important;z-index:8!important;
+}
+.map-world-stage>.map-hotspots{
+  position:absolute!important;inset:0!important;
+  width:100%!important;height:100%!important;
+  display:block!important;z-index:9!important;
+  overflow:hidden!important;pointer-events:none!important;
+}
+.map-world-stage .building-art{
+  position:absolute!important;display:block!important;
+  object-fit:contain!important;transform:translate(-50%,-50%)!important;
+  pointer-events:none!important;user-select:none!important;
+  -webkit-user-drag:none!important;z-index:1!important;
+  filter:drop-shadow(0 9px 8px rgba(18,35,31,.42))!important;
+}
+.map-world-stage .hotspot{
+  position:absolute!important;z-index:2!important;
+  pointer-events:auto!important;touch-action:manipulation!important;
+  border:2px solid transparent!important;background:transparent!important;
+}
+.map-world-stage #mapActors{z-index:10!important}
+.map-world-stage .map-hud{z-index:16!important}
+.map-world-stage .map-tools{z-index:18!important}
+.map-world-stage .map-hint{z-index:16!important}
+@media(orientation:portrait){
+  .map-world-stage{
+    width:min(100vh,160vw)!important;
+    aspect-ratio:16/10!important;
+    height:auto!important;
+    transform:translate(-50%,-50%) rotate(90deg)!important;
+  }
+}
+/* end IKIGAI WORLD 9.2.1 authoritative true-layer stack */
