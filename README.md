@@ -43,6 +43,13 @@ Các layer PNG hiện tại được kế thừa từ bộ tài nguyên tách k�
 
 
 ## Bản đồ 9.2.3
-- Background mới: `assets/ikigai-world-background-no-buildings.png` (6688x3764).
+- Background mới: `assets/ikigai-world-background-no-buildings.png` (3840x2160 (4K UHD)).
 - 7 công trình PNG độc lập trong `assets/buildings/`, có thể thay đổi vị trí/kích thước bằng CSS.
 - Bố cục canvas 1672x941, các hotspot tương ứng vẫn hoạt động.
+
+
+## IKIGAI WORLD 9.3 – Living Sakura World
+- Bổ sung `canvas#ambientCanvas` độc lập, phủ hiệu ứng trang trí lên bản đồ.
+- Script hiệu ứng nằm riêng trong `ambient-effects.js`.
+- Hiệu ứng hoa anh đào rơi, thác nước lấp lánh, đài phun nước và ánh nước mặt hồ.
+- Canvas không chặn thao tác bấm công trình; tự dừng khi vào phòng hoặc chuyển tab.

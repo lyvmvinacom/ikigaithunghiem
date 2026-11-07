@@ -649,3 +649,16 @@
  .map-world-stage{width:min(100vh,177.68vw)!important;aspect-ratio:1672/941!important;height:auto!important;transform:translate(-50%,-50%) rotate(90deg)!important}
 }
 /* end 9.2.3 layered-map layout */
+
+
+/* IKIGAI WORLD 9.3 — independent ambient canvas */
+.map-world-stage>.ambient-canvas{
+  position:absolute!important;inset:0!important;
+  width:100%!important;height:100%!important;
+  display:block!important;z-index:12!important;
+  pointer-events:none!important;touch-action:none!important;
+  user-select:none!important;-webkit-user-select:none!important;
+}
+@media(prefers-reduced-motion:reduce){
+  .map-world-stage>.ambient-canvas{visibility:hidden!important}
+}
