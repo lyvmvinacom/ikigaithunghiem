@@ -70,7 +70,15 @@ return `<nav class="room-floating-nav" aria-label="Điều hướng trong phòng
 }
 function enterPlace(p){currentPlace=p;$('mapScene').hidden=true;$('roomScene').hidden=false;let title='',inside='';
 const decor='<div class="wall"></div><div class="floor"></div><div class="window left"></div><div class="window right"></div>';
-if(p==='class'){title='LỚP HỌC IKIGAI';inside=`${decor}<div class="room-scenery class-scenery"><div class="scenery-sun"></div><div class="sakura-branch">🌸 🌿 🌸</div><div class="classroom-window-scene"><span>富士山</span></div><div class="wall-scroll">一期一会</div><div class="wall-banner">IKIGAI LANGUAGE ACADEMY · 日本語教室</div><div class="class-plant plant-left">🪴</div><div class="class-plant plant-right">🌸</div><div class="blackboard">日本語を勉強しましょう！<br><small>Học mỗi ngày – Tiến bộ mỗi ngày</small><i>今日の目標：一歩ずつ、確実に。</i></div><div class="class-clock">🕘</div><div class="class-shelf"><span>📚 📚 📚 📚</span><small>IKIGAI LIBRARY</small></div><div class="class-pinboard">📌 今日の目標<br><small>よく聞く・よく話す・毎日練習</small></div><div class="class-desk desk-left"><span>📖</span><small>TỪ VỰNG</small></div><div class="class-desk desk-mid"><span>✏️</span><small>NGỮ PHÁP</small></div><div class="class-desk desk-right"><span>漢</span><small>KANJI</small></div><div class="room-actors">${role==='teacher'?roomCharacter(roomPos,'me','リー先生','teacher'):`${roomCharacter({x:50,y:65},'teacher-npc','リー先生','teacher')}${roomCharacter(roomPos,'me',nickname,role)}`}</div>${roomStations(['vocabulary','grammar','kanji'])}<div class="speech-room">${role==='teacher'?'先生モード：今日の授業を始めましょう！':'Chào mừng bạn đến lớp học IKIGAI!'}</div>`}
+if(p==='class'){title='LỚP HỌC IKIGAI';inside=`<div class="classroom-gunny-scene" role="group" aria-label="Lớp học IKIGAI">
+<img class="classroom-gunny-art" src="assets/ikigai-classroom-gunny.png" alt="Lớp học IKIGAI với thầy リー先生 và năm bảng chức năng">
+<button class="classroom-hotspot hs-vocabulary" data-action="vocabulary" aria-label="Từ vựng" title="Từ vựng"></button>
+<button class="classroom-hotspot hs-grammar" data-action="grammar" aria-label="Ngữ pháp" title="Ngữ pháp"></button>
+<button class="classroom-hotspot hs-kanji" data-action="kanji" aria-label="Kanji" title="Kanji"></button>
+<button class="classroom-hotspot hs-kaiwa" data-action="kaiwa" aria-label="Kaiwa" title="Kaiwa"></button>
+<button class="classroom-hotspot hs-listening" data-action="listening" aria-label="Nghe hiểu" title="Nghe hiểu"></button>
+<div class="room-actors">${role==='teacher'?roomCharacter(roomPos,'me','リー先生','teacher'):''}</div>
+</div>`}
 if(p==='n5'){title='PHÒNG LUYỆN THI N5';inside=`${decor}<div class="exam-room-art n5-art"><div class="banner">🌸 N5 · KHU LUYỆN THI CƠ BẢN</div><div class="exam-window">富士山 · SAKURA</div><div class="exam-podium">N5<small>日本語能力試験</small></div><div class="exam-bookcase">📚 📚 📚<small>GIÁO TRÌNH N5</small></div><div class="exam-headphones">🎧<small>NGHE HIỂU</small></div><div class="exam-scroll">ひらがな · カタカナ · 漢字</div><div class="room-actors">${roomCharacter(roomPos,'me')}</div>${roomStations(['vocabulary','grammar','kanji','reading','listening','mock'])}`}
 if(p==='n4'||p==='jft'){title=p==='n4'?'PHÒNG LUYỆN THI N4':'PHÒNG LUYỆN THI JFT';inside=`${decor}<div class="exam-room-art advanced-art"><div class="banner">${p==='n4'?'🏯 N4 · THỬ THÁCH TRUNG CẤP':'🎌 JFT-BASIC A2 · EXAM HALL'}</div><div class="exam-window">日本語 · CHALLENGE</div><div class="exam-podium">${p==='n4'?'N4':'A2'}<small>${p==='n4'?'日本語能力試験':'JFT-BASIC'}</small></div><div class="exam-bookcase">📚 📚 📚<small>THƯ VIỆN ĐỀ THI</small></div><div class="exam-headphones">🎧<small>LISTENING LAB</small></div><div class="exam-scroll">読む · 聞く · 書く · 話す</div><div class="room-actors">${roomCharacter(roomPos,'me')}</div>${roomStations(['vocabulary','grammar','kanji','reading','listening','mock'],true)}<div class="speech-room">Khu vực đang chờ ngân hàng đề riêng.</div>`}
 if(p==='arena'){title='ĐẤU TRƯỜNG IKIGAI';inside=`${decor}<div class="arena-art"><div class="arena-banners">⚔️ IKIGAI BATTLE ARENA ⚔️</div><div class="arena-crowd">🏯　🏮　🏯　🏮　🏯</div><div class="arena-ring"><span>IKIGAI</span><small>知識の決闘</small></div><div class="arena-podium">🏆<small>HALL OF CHAMPIONS</small></div><div class="arena-weapon left">⚔️</div><div class="arena-weapon right">🛡️</div></div><div class="room-actors">${roomCharacter(roomPos,'me')}</div><div class="arena-lobby"><h3>⚔️ SẢNH CHỜ ĐẤU TRƯỜNG</h3><p>Chọn thể thức. Trận đấu chỉ bắt đầu khi đủ người và tất cả đã sẵn sàng.</p><div class="arena-modes"><button data-arena="1v1">⚔️ ĐẤU 1–1 <small>2 người</small></button><button data-arena="2v2">🛡️ ĐẤU 2–2 <small>4 người</small></button></div><div id="arenaStatus">Chưa tham gia hàng chờ.</div><div id="arenaRoster"></div><button id="arenaReady" class="gold" disabled>✓ SẴN SÀNG</button><button id="arenaCancel" class="secondary" disabled>RỜI HÀNG CHỜ</button></div>`}
@@ -134,7 +142,60 @@ function updateArenaLobby(){
 function renderRoomPeers(){const host=$('roomScene').querySelector('.room-actors');if(!host)return;host.querySelectorAll('.room-actor[data-peer="true"]').forEach(el=>el.remove());Object.values(people).filter(p=>p.scene==='room'&&p.place===currentPlace&&p.user_id!==user.id).forEach(p=>host.insertAdjacentHTML('beforeend',roomCharacter({x:p.roomX??50,y:p.roomY??70},p.user_id||p.id,p.name,p.role,p.gender,p.avatar)))}
 function backMap(){if(arenaMode)leaveArenaQueue();$('roomScene').hidden=true;$('mapScene').hidden=false;if(channel&&joined){channel.track(profile());channel.send({type:'broadcast',event:'scene',payload:{user_id:user.id,name:nickname,scene:'map',place:'map'}})}renderActors()}
 async function loadBank(){try{const r=await fetch('assets/ikigai-n5-bank.json');if(!r.ok)throw Error('HTTP '+r.status);const d=await r.json();bank=d.questions||[];toast(`Đã nạp ngân hàng N5: ${bank.length} câu`)}catch(e){console.error(e);toast('Không tải được ngân hàng câu hỏi N5')}}
-function roomAction(a){if(a==='kaiwa'){info('LUYỆN KAIWA','Khu vực Kaiwa sẽ kết nối với hoạt động hội thoại của IKIGAI. Hiện tại chưa có bài hội thoại được cấu hình trong ngân hàng câu hỏi này.');return}if(['vocabulary','grammar','kanji','reading','listening','mock','duel'].includes(a)){if(!bank.length){toast('Ngân hàng câu hỏi chưa tải xong');return}startQuiz(a);return}if(a==='rules'){info('Luật đấu tập','Mỗi câu trả lời đúng được 10 XP. Hiện tại là đấu tập cục bộ, chưa phải ghép trận trực tuyến.');return}if(a==='gym'){info('Thử thách Gym','Chọn một hoạt động an toàn: đi bộ tại chỗ 1 phút, vươn vai 10 lần hoặc hít thở và giãn cơ. Không cố quá sức.');return}if(a==='tea'){info('Anh Tùng','“Uống trà với anh nhé”. Nghỉ ngơi một chút rồi tiếp tục hành trình học tập nhé.');return}}
+
+const kaiwaStarter=[
+{lesson:1,question:'Aさん：おはようございます。 Bさん：＿＿＿。',options:['おはようございます','さようなら','いただきます','おやすみなさい'],correct:'A',explanation:'Buổi sáng, đáp lại おはようございます bằng おはようございます。'},
+{lesson:1,question:'Aさん：はじめまして。 Bさん：＿＿＿。',options:['お元気ですか','はじめまして','おやすみなさい','どういたしまして'],correct:'B',explanation:'Lần đầu gặp nhau, đáp lại はじめまして。'},
+{lesson:2,question:'Aさん：これは何ですか。 Bさん：＿＿＿。',options:['私です','先生です','本です','日本です'],correct:'C',explanation:'これは何ですか hỏi “Đây là cái gì?”.'},
+{lesson:2,question:'Aさん：それはあなたの本ですか。 Bさん：はい、＿＿＿。',options:['そうです','違います','何ですか','どこですか'],correct:'A',explanation:'はい、そうです là cách xác nhận tự nhiên.'},
+{lesson:3,question:'Aさん：トイレはどこですか。 Bさん：＿＿＿。',options:['三時です','あそこです','千円です','学生です'],correct:'B',explanation:'どこ hỏi vị trí; あそこです nghĩa là ở đằng kia.'},
+{lesson:3,question:'Aさん：学校はどちらですか。 Bさん：＿＿＿。',options:['九時です','これです','こちらです','だれです'],correct:'C',explanation:'こちらです là cách chỉ hướng/vị trí lịch sự.'},
+{lesson:4,question:'Aさん：今、何時ですか。 Bさん：＿＿＿。',options:['月曜日です','七時です','学校です','一人です'],correct:'B',explanation:'何時 hỏi mấy giờ; 七時です là bảy giờ.'},
+{lesson:4,question:'Aさん：毎朝、何時に起きますか。 Bさん：＿＿＿。',options:['六時に起きます','六時を食べます','六時へ行きます','六時がいます'],correct:'A',explanation:'何時に起きますか hỏi thời điểm thức dậy.'},
+{lesson:5,question:'Aさん：明日、どこへ行きますか。 Bさん：＿＿＿。',options:['友達と映画館へ行きます','昨日行きました','九時からです','学生ではありません'],correct:'A',explanation:'どこへ行きますか hỏi địa điểm; trả lời nơi sẽ đến.'},
+{lesson:5,question:'Aさん：いっしょに昼ご飯を食べませんか。 Bさん：＿＿＿。',options:['いいですね','いただきますでした','どなたですか','何階ですか'],correct:'A',explanation:'Lời mời 食べませんか có thể đáp lại いいですね。'}
+];
+function openLessonPicker(group){
+ const a=$('activity');a.hidden=false;
+ const label=group==='vocabulary'?'TỪ VỰNG':group==='grammar'?'NGỮ PHÁP':'KAIWA';
+ a.innerHTML=`<button class="close-activity">×</button><small>IKIGAI LANGUAGE CLASS · リー先生</small><h2>CHỌN BÀI ${label}</h2><p>Chọn bài Minna no Nihongo muốn luyện tập.</p><div class="lesson-grid">${Array.from({length:25},(_,i)=>`<button data-lesson="${i+1}">Bài ${i+1}</button>`).join('')}</div>`;
+ a.querySelector('.close-activity').onclick=()=>a.hidden=true;
+ a.querySelectorAll('[data-lesson]').forEach(b=>b.onclick=()=>startLessonGame(group,Number(b.dataset.lesson)));
+}
+function startLessonGame(group,lesson){
+ activeGroup=group;
+ const source=group==='kaiwa'?kaiwaStarter.filter(q=>q.lesson===lesson):bank.filter(q=>q.group===group&&Number(q.lesson)===lesson);
+ qset=shuffle(source).slice(0,group==='kaiwa'?source.length:10);
+ if(!qset.length){info('Chưa có dữ liệu',`Chưa có câu hỏi ${group==='kaiwa'?'Kaiwa':group==='vocabulary'?'từ vựng':'ngữ pháp'} cho bài ${lesson}.`);return}
+ qpos=0;score=0;renderClassGame(lesson);
+}
+function renderClassGame(lesson){
+ const q=qset[qpos],correct='ABCD'.indexOf(q.correct),a=$('activity');
+ const mode=activeGroup==='vocabulary'?'CHÉM HOA QUẢ · TỪ VỰNG':activeGroup==='grammar'?'ĐIỀN TỪ · NGỮ PHÁP':'KAIWA · HỘI THOẠI';
+ const fruits=['🍉','🍊','🍓','🍍'];
+ a.hidden=false;
+ a.innerHTML=`<button class="close-activity">×</button><small>IKIGAI · BÀI ${lesson} · CÂU ${qpos+1}/${qset.length}</small><h2>${mode}</h2><div class="progress"><i style="width:${qpos/qset.length*100}%"></i></div><div class="question">${safe(q.question)}</div><p class="fruit-instruction">${activeGroup==='vocabulary'?'Chọn và chém quả mang đáp án đúng!':activeGroup==='grammar'?'Chọn từ đúng nhất để hoàn thành câu.':'Chọn câu đáp lại phù hợp nhất.'}</p><div class="fruit-answer-grid">${q.options.map((o,i)=>`<button class="fruit-answer ${activeGroup==='vocabulary'?'fruit-mode':''}" data-opt="${i}"><span class="fruit-emoji">${fruits[i]}</span><b>${'ABCD'[i]}</b><span>${safe(o)}</span></button>`).join('')}</div><div class="feedback" id="feedback"></div><small class="muted">Điểm: ${score}</small>`;
+ a.querySelector('.close-activity').onclick=()=>a.hidden=true;
+ a.querySelectorAll('[data-opt]').forEach(b=>b.onclick=()=>{
+  if(a.querySelector('[data-opt]:disabled'))return;
+  a.querySelectorAll('[data-opt]').forEach(x=>x.disabled=true);
+  const ok=Number(b.dataset.opt)===correct;
+  if(ok){score++;b.classList.add('sliced');$('feedback').textContent='✨ Chính xác! +1 điểm';$('feedback').style.color='#287443'}
+  else{b.classList.add('wrong-hit');a.querySelector(`[data-opt="${correct}"]`)?.classList.add('correct-reveal');$('feedback').textContent='Chưa chính xác. Đáp án đúng: '+q.options[correct];$('feedback').style.color='#b34836'}
+  if(q.explanation){const p=document.createElement('p');p.className='muted';p.textContent=q.explanation;$('feedback').after(p)}
+  const n=document.createElement('button');n.className='gold';n.textContent=qpos===qset.length-1?'XEM KẾT QUẢ':'CÂU TIẾP THEO';n.onclick=()=>{qpos++;qpos<qset.length?renderClassGame(lesson):finishQuiz()};a.appendChild(n);
+ });
+}
+function roomAction(a){
+ if(a==='vocabulary'||a==='grammar'||a==='kaiwa'){openLessonPicker(a);return}
+ if(a==='kanji'){info('KANJI','Chức năng Kanji đã được mở trên giao diện. Nội dung luyện tập sẽ được triển khai ở giai đoạn tiếp theo.');return}
+ if(a==='listening'){info('NGHE HIỂU','Chức năng Nghe hiểu đã được mở trên giao diện. Ngân hàng âm thanh và bài nghe sẽ được bổ sung ở giai đoạn tiếp theo.');return}
+ if(['reading','mock','duel'].includes(a)){if(!bank.length){toast('Ngân hàng câu hỏi chưa tải xong');return}startQuiz(a);return}
+ if(a==='rules'){info('Luật đấu tập','Mỗi câu trả lời đúng được 10 XP. Hiện tại là đấu tập cục bộ, chưa phải ghép trận trực tuyến.');return}
+ if(a==='gym'){info('Thử thách Gym','Chọn một hoạt động an toàn: đi bộ tại chỗ 1 phút, vươn vai 10 lần hoặc hít thở và giãn cơ. Không cố quá sức.');return}
+ if(a==='tea'){info('Anh Tùng','“Uống trà với anh nhé”. Nghỉ ngơi một chút rồi tiếp tục hành trình học tập nhé.');return}
+}
+
 function info(title,txt){const a=$('activity');a.hidden=false;a.innerHTML=`<button class="close-activity">×</button><small>IKIGAI WORLD</small><h2>${title}</h2><p>${txt}</p><button class="gold" id="infoOk">ĐÃ HIỂU</button>`;a.querySelector('.close-activity').onclick=()=>a.hidden=true;$('infoOk').onclick=()=>a.hidden=true}
 function shuffle(a){const b=a.slice();for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
 function startQuiz(group){activeGroup=group;let rows=group==='mock'||group==='duel'?bank.filter(q=>['vocabulary','grammar','kanji'].includes(q.group)):bank.filter(q=>q.group===group);qset=shuffle(rows).slice(0,group==='mock'||group==='duel'?20:10);if(!qset.length){info('Chưa có dữ liệu',`Chưa có câu hỏi cho mục ${group}.`);return}qpos=0;score=0;renderQuestion()}
