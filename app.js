@@ -131,22 +131,7 @@ function showRankCelebration(player,level){
  clearTimeout(window.__ikigaiRankCelebrationTimer);
  window.__ikigaiRankCelebrationTimer=setTimeout(()=>{host.classList.remove('show');host.hidden=true},6500);
 }
-function renderClassLeaderboard(){
- const host=$('classLeaderboard');if(!host)return;
- const list=currentClassOccupants().map(p=>({...p,xp:Number(p.xp||0),level:rankLevel(p.xp)}))
-  .sort((a,b)=>b.xp-a.xp||String(a.name).localeCompare(String(b.name))).slice(0,10);
- const medals=['👑','🥈','🥉'];
- host.innerHTML=`<div class="class-lb-title">🏆 BẢNG VINH DANH IKIGAI</div>`+
- list.map((p,i)=>`<div class="class-lb-row rank-${i+1} ${((p.user_id||p.id)===user?.id)?'is-me':''}">
- <span class="class-lb-medal">${medals[i]||String(i+1)}</span><span class="class-lb-name">${safe(p.name||'Học viên')}<small>${classRanks[p.level-1].icon} ${classRanks[p.level-1].name} · Lv.${p.level}</small></span><b class="class-lb-xp">${p.xp} XP</b></div>`).join('')+
- (list.length?'':`<div class="class-lb-empty">Chưa có học viên trực tuyến</div>`)+
- (list.some(p=>p.level===10)?`<div class="class-hall-of-fame">🏆 HALL OF FAME · MAX RANK<br>${list.filter(p=>p.level===10).map(p=>`<b>${safe(p.name)}</b>`).join(' · ')}</div>`:'');
- const nextLevels=new Map(list.map(p=>[p.user_id||p.id,p.level]));
- if(rankCelebrationReady){
-  for(const p of list){const id=p.user_id||p.id,prev=lastSeenRankLevels.get(id);if(prev&&p.level>prev)showRankCelebration(p.name,p.level)}
- }
- lastSeenRankLevels=nextLevels;rankCelebrationReady=true;
-}
+function renderClassLeaderboard(){const host=$('classLeaderboard');if(host){host.innerHTML='';host.hidden=true;}}
 
 function updateClassBoard(q,lesson,mode){
  const title=$('classBoardMode'),count=$('classBoardCount'),question=$('classBoardQuestion'),opts=$('classBoardOptions');
@@ -161,7 +146,7 @@ const decor='<div class="wall"></div><div class="floor"></div><div class="window
 if(p==='class'){title='LỚP HỌC IKIGAI';inside=`<div class="classroom-gunny-scene" role="group" aria-label="Lớp học IKIGAI">
 <img class="classroom-gunny-art" src="assets/ikigai-classroom-gunny-10seats.png" alt="Lớp học IKIGAI với mười chỗ ngồi và bảng câu hỏi">
 <div class="class-question-board" aria-live="polite"><div class="board-heading"><span id="classBoardMode">BẢNG HỌC TẬP IKIGAI</span><small id="classBoardCount">Chọn một chức năng bên phải</small></div><div id="classBoardQuestion">ようこそ！<br>Chọn Từ vựng, Ngữ pháp hoặc Kaiwa để bắt đầu.</div><div id="classBoardOptions"></div></div>
-<div class="class-seat-layer" id="classSeatLayer" aria-label="Danh sách mười chỗ ngồi"></div><aside id="classLeaderboard" class="class-leaderboard" aria-label="Bảng xếp hạng học viên"></aside><div class="class-room-seat-status" id="classRoomSeatStatus">Đang xếp chỗ...</div>
+<div class="class-seat-layer" id="classSeatLayer" aria-label="Danh sách mười chỗ ngồi"></div><div class="class-room-seat-status" id="classRoomSeatStatus">Đang xếp chỗ...</div>
 <div id="classRankCelebration" class="class-rank-celebration" hidden aria-live="polite"></div>\n<nav class="classroom-function-menu" aria-label="Chức năng học tập">
 <button class="classroom-function-btn" data-action="vocabulary"><span class="classroom-function-icon">📖</span><span>Từ vựng</span></button>
 <button class="classroom-function-btn" data-action="grammar"><span class="classroom-function-icon">📝</span><span>Ngữ pháp</span></button>

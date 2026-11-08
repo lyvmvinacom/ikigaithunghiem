@@ -1235,3 +1235,57 @@ html, body {
     height: 100dvh !important;
   }
 }
+
+
+/* IKIGAI WORLD 9.8.2 — portrait phone landscape canvas, correct rotation direction */
+@media screen and (orientation: portrait) and (max-width: 900px) {
+  #roomScene.room-scene {
+    position: fixed !important;
+    inset: auto !important;
+    left: 50% !important;
+    top: 50% !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 100dvh !important;
+    height: 100dvw !important;
+    max-width: none !important;
+    max-height: none !important;
+    transform: translate(-50%, -50%) rotate(-90deg) !important;
+    transform-origin: center center !important;
+    overflow: hidden !important;
+    z-index: 100 !important;
+  }
+  #roomScene.room-scene .interior {
+    inset: 50px 0 0 !important;
+    width: 100% !important;
+    height: calc(100% - 50px) !important;
+    overflow: hidden !important;
+  }
+  #roomScene.room-scene .interior-class {
+    overflow: hidden !important;
+  }
+  #roomScene.room-scene .interior-class .classroom-gunny-scene {
+    position: absolute !important;
+    inset: 0 !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    transform: none !important;
+    transform-origin: initial !important;
+  }
+  #roomScene.room-scene .interior-class .classroom-gunny-art {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: fill !important;
+    transform: none !important;
+  }
+  #roomScene.room-scene .interior-class .class-leaderboard,
+  #roomScene.room-scene #classLeaderboard {
+    display: none !important;
+  }
+}
+#roomScene.room-scene .interior-class .class-leaderboard,
+#roomScene.room-scene #classLeaderboard { display:none !important; }
