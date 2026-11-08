@@ -1090,3 +1090,16 @@ html, body {
 .interior-class .board-feedback{grid-column:1/-1;min-height:17px;text-align:center;font-weight:900;font-size:clamp(9px,.9vw,13px);padding:2px;color:#fff2c8}
 .interior-class .board-feedback.good{color:#b9ffc8}.interior-class .board-feedback.bad{color:#ffc2ae}
 @media(max-width:700px){.interior-class .class-seat-avatar{width:clamp(32px,8vw,52px);height:clamp(60px,11vh,88px)}.interior-class #classBoardOptions{gap:4px;max-height:65%}.interior-class .board-choice{font-size:9px;padding:5px 6px}}
+
+
+/* IKIGAI WORLD 9.5.6 — fix lesson list scroll origin */
+.interior-class #classBoardOptions{
+ align-content:start!important;
+ justify-content:start!important;
+ overflow-y:auto!important;
+ overflow-x:hidden!important;
+ overscroll-behavior-y:contain;
+ scroll-behavior:auto;
+ scroll-padding-top:4px;
+}
+.interior-class #classBoardOptions .lesson-choice{align-self:start}

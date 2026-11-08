@@ -218,7 +218,9 @@ function openLessonPicker(group){
  const label=group==='vocabulary'?'TỪ VỰNG':group==='grammar'?'NGỮ PHÁP':'KAIWA';
  setClassBoard(label+' · TỰ HỌC CÁ NHÂN','CHỌN BÀI 1–25','Chọn bài Minna no Nihongo bạn muốn luyện tập.',
  Array.from({length:25},(_,i)=>`<button class="board-choice lesson-choice" data-lesson="${i+1}">Bài ${i+1}</button>`).join(''));
- $('classBoardOptions')?.querySelectorAll('[data-lesson]').forEach(b=>b.onclick=()=>startLessonGame(group,Number(b.dataset.lesson)));
+ const lessonOptions=$('classBoardOptions');
+ if(lessonOptions)lessonOptions.scrollTop=0;
+ lessonOptions?.querySelectorAll('[data-lesson]').forEach(b=>b.onclick=()=>startLessonGame(group,Number(b.dataset.lesson)));
 }
 function startLessonGame(group,lesson){
  activeGroup=group;
