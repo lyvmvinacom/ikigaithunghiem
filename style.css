@@ -1497,3 +1497,13 @@ html, body {
 .music-toggle{position:fixed;z-index:9999;right:max(12px,env(safe-area-inset-right));bottom:max(12px,env(safe-area-inset-bottom));display:flex;align-items:center;gap:7px;padding:9px 13px;border:1px solid #f6d17b;border-radius:999px;background:linear-gradient(145deg,#174d4bfa,#092e38fa);color:#fff4d2;font-weight:900;font-size:12px;letter-spacing:.3px;box-shadow:0 4px 16px #0008;cursor:pointer;touch-action:manipulation}
 .music-toggle-icon{font-size:18px;line-height:1;color:#ffe08a}.music-toggle.is-muted{filter:grayscale(.65);opacity:.78}.music-toggle:active{transform:scale(.97)}
 @media(min-width:901px){.music-toggle{top:14px;bottom:auto;right:16px}}
+
+
+/* IKIGAI WORLD 9.8.7 — classroom navigation de-duplication.
+   The illustrated classroom already has its own right-side function menu.
+   Do not render the generic floating navigation bar in this room. */
+#roomScene .interior-class .room-floating-nav {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
