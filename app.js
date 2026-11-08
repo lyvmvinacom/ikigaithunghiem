@@ -5,7 +5,7 @@ const SUPABASE_URL='https://vfimwlijbxamudirejiq.supabase.co';
 const SUPABASE_ANON_KEY='sb_publishable_IETjbMWeJthqXscH9fkrXg_x2QZiL8D';
 const ROOM='ikigai-world-main';
 const $=id=>document.getElementById(id),safe=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-let client=null,channel=null,user=null,nickname='',role='student',gender='male',avatar=0,joined=false,bank=[],currentPlace='',qset=[],qpos=0,score=0,activeGroup='',myPos={x:50,y:70},roomPos={x:50,y:70},people={},moving=false,lastSend=0,moveLoop=null,keys={},xp=0,coins=0,profileLoaded=false,awardBusy=false,arenaMode='',arenaReady=false,arenaTimer=null;
+let classSeatNo=null,client=null,channel=null,user=null,nickname='',role='student',gender='male',avatar=0,joined=false,bank=[],currentPlace='',qset=[],qpos=0,score=0,activeGroup='',myPos={x:50,y:70},roomPos={x:50,y:70},people={},moving=false,lastSend=0,moveLoop=null,keys={},xp=0,coins=0,profileLoaded=false,awardBusy=false,arenaMode='',arenaReady=false,arenaTimer=null;
 const stateKey='ikigaiWorld3Player';
 const placeData={class:['Lớp học IKIGAI','Nơi học từ vựng, ngữ pháp và Kanji cùng リー先生.'],arena:['Đấu trường IKIGAI','Đấu tập kiến thức N5 với bạn bè.'],n4:['Phòng luyện thi N4','Khu vực đã sẵn sàng; ngân hàng N4 sẽ được kết nối khi có dữ liệu.'],n5:['Phòng luyện thi N5','Ôn tập từ vựng, ngữ pháp, Kanji, đọc hiểu và nghe hiểu.'],jft:['Phòng luyện thi JFT','Khu vực JFT-Basic A2. Đề thi sẽ được kết nối theo bộ dữ liệu JFT riêng.'],gym:['Phòng Gym','Gặp huấn luyện viên và hoàn thành thử thách vận động an toàn.'],tea:['Phòng Trà IKIGAI','Không gian thưởng trà và giao lưu của IKIGAI. “Uống trà với anh nhé”.']};
 function toast(s){$('toast').textContent=s;$('toast').classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>$('toast').classList.remove('show'),2600)}
@@ -26,14 +26,14 @@ async function guest(){nickname=$('studentName').value.trim()||'Khách IKIGAI';i
 $('studentSignIn').onclick=()=>studentAuth(false);$('studentSignUp').onclick=()=>studentAuth(true);$('teacherSignIn').onclick=teacherAuth;$('guestEnter').onclick=guest;
 async function enterWorld(){if(!user)throw Error('Chưa xác thực tài khoản');$('login').hidden=true;$('hudName').textContent=nickname;$('hudRole').textContent=role==='teacher'?'GIÁO VIÊN · リー先生':role==='guest'?'KHÁCH · PHIÊN TẠM':'HỌC VIÊN IKIGAI';$('hudAvatar').textContent=role==='teacher'?'👨🏻‍🏫':'🌸';await loadPlayerProfile();save();await connectRealtime();await loadBank();renderActors();toast('🌸 Chào mừng '+nickname+' đến IKIGAI WORLD!')}
 async function connectRealtime(){if(channel){try{await client.removeChannel(channel)}catch(e){}}joined=false;channel=client.channel(ROOM,{config:{presence:{key:user.id},broadcast:{self:false}}});
-channel.on('presence',{event:'sync'},()=>{const state=channel.presenceState();people={};Object.values(state).flat().forEach(p=>{if(p.user_id!==user.id)people[p.user_id]=p});renderActors();renderMembers();if(!$('roomScene').hidden)renderRoomPeers();updateArenaLobby()});
+channel.on('presence',{event:'sync'},()=>{const state=channel.presenceState();people={};Object.values(state).flat().forEach(p=>{if(p.user_id!==user.id)people[p.user_id]=p});renderActors();renderMembers();if(!$('roomScene').hidden){renderRoomPeers();if(currentPlace==='class')renderClassSeats()}updateArenaLobby()});
 channel.on('broadcast',{event:'position'},({payload})=>{if(!payload||payload.user_id===user.id)return;const p=people[payload.user_id]||{};Object.assign(p,payload);people[payload.user_id]=p;updateActor(payload);renderMembers()});
 channel.on('broadcast',{event:'chat'},({payload})=>{if(payload?.user_id!==user.id){const scene=$('roomScene').hidden?'map':'room';if(payload?.scene===scene&&(scene!=='room'||payload?.place===currentPlace)){addMessage(payload.name,payload.text,payload.role==='teacher');if(scene==='room')showBubble(payload.user_id,payload.text)}}});
 channel.on('broadcast',{event:'bubble'},({payload})=>{if(payload?.user_id!==user.id)showBubble(payload.user_id,payload.text)});
 channel.on('broadcast',{event:'scene'},({payload})=>{if(payload?.user_id!==user.id&&payload?.scene==='room')toast(`${payload.name} đã vào ${placeData[payload.place]?.[0]||'một phòng'}`)});
 const status=await new Promise(resolve=>{const timer=setTimeout(()=>resolve('TIMEOUT'),10000);channel.subscribe(async s=>{if(s==='SUBSCRIBED'){clearTimeout(timer);joined=true;await channel.track(profile());$('connectionStatus')?.classList.add('connected');resolve(s)}else if(s==='CHANNEL_ERROR'||s==='TIMED_OUT'){clearTimeout(timer);resolve(s)}})});
 if(status!=='SUBSCRIBED')toast('Chưa kết nối được máy chủ nhiều người chơi. Bạn vẫn có thể học cục bộ.');}
-function profile(){return {user_id:user.id,id:user.id,name:nickname,role:role==='teacher'?'teacher':role==='guest'?'guest':'student',gender,avatar,x:myPos.x,y:myPos.y,moving:!!myPos.moving,direction:myPos.direction||'down',scene:$('roomScene').hidden?'map':'room',place:currentPlace||'map',roomX:roomPos.x,roomY:roomPos.y,online_at:new Date().toISOString()}}
+function profile(){return {user_id:user.id,id:user.id,name:nickname,role:role==='teacher'?'teacher':role==='guest'?'guest':'student',gender,avatar,x:myPos.x,y:myPos.y,moving:!!myPos.moving,direction:myPos.direction||'down',scene:$('roomScene').hidden?'map':'room',place:currentPlace||'map',roomX:roomPos.x,roomY:roomPos.y,classSeat:classSeatNo||null,online_at:new Date().toISOString()}}
 async function loadPlayerProfile(){xp=0;coins=0;profileLoaded=false;if(role==='guest'){save();return}try{const {data,error}=await client.rpc('ikigai_ensure_profile',{p_nickname:nickname,p_gender:gender,p_avatar:avatar});if(error)throw error;const row=Array.isArray(data)?data[0]:data;if(row){nickname=row.nickname||nickname;gender=row.gender||gender;avatar=Number(row.avatar||0);xp=Number(row.xp||0);coins=Number(row.coins||0)}profileLoaded=true;$('hudName').textContent=nickname;save()}catch(e){console.error('Profile sync:',e);toast('Chưa đồng bộ được hồ sơ/XP. Hãy chạy SQL 3.2 trong Supabase.');save()}}
 async function persistAward(){if(role==='guest'||!profileLoaded||awardBusy)return false;awardBusy=true;try{const {data,error}=await client.rpc('ikigai_award_quiz',{p_xp:score*10,p_coins:Math.max(0,Math.floor(score*2)),p_correct:score,p_total:qset.length,p_attempt_id:crypto.randomUUID()});if(error)throw error;xp=Number(data?.xp??xp);coins=Number(data?.coins??coins);save();return true}catch(e){console.error('Award sync:',e);toast('Kết quả đã chấm nhưng chưa cộng thưởng lên tài khoản. Cần kiểm tra RPC Supabase.');return false}finally{awardBusy=false}}
 function renderActors(){/* Gunny-style: map is scenery only; sprites appear after entering a room. */$('mapActors').innerHTML='';$('onlineCount').textContent=String(Object.keys(people).length+1)}
@@ -68,10 +68,56 @@ tea:[['tea','🍵','Thưởng trà']]
 const items=sets[p]||[];
 return `<nav class="room-floating-nav" aria-label="Điều hướng trong phòng">${items.map(([action,icon,label])=>`<button type="button" data-action="${action}"><span>${icon}</span><small>${label}</small></button>`).join('')}<button type="button" class="room-nav-back" data-nav-back><span>🗺️</span><small>Bản đồ</small></button></nav>`;
 }
+
+const classSeatPositions=[
+ [15,68],[33,68],[51,68],[69,68],[86,68],
+ [10,87],[30,87],[50,87],[70,87],[90,87]
+];
+
+function currentClassOccupants(){
+ const peers=Object.values(people).filter(p=>p.scene==='room'&&p.place==='class'&&p.user_id!==user?.id);
+ const all=[...peers];
+ if(user&&$('roomScene')&&!$('roomScene').hidden&&currentPlace==='class'){
+  all.push({user_id:user.id,id:user.id,name:nickname,role,gender,avatar});
+ }
+ const unique=new Map();all.forEach(p=>unique.set(p.user_id||p.id,p));
+ return [...unique.values()].sort((a,b)=>String(a.user_id||a.id).localeCompare(String(b.user_id||b.id)));
+}
+/* Seat order is derived identically by every client from the current room presence.
+   This is a visual seating arrangement only; it does not control learning state. */
+function assignClassSeat(){
+ const occupants=currentClassOccupants();
+ const mine=occupants.findIndex(p=>(p.user_id||p.id)===user?.id);
+ classSeatNo=mine>=0&&mine<10?mine+1:null;
+}
+function renderClassSeats(){
+ const host=$('classSeatLayer');if(!host)return;
+ const occupants=currentClassOccupants();
+ const visible=occupants.slice(0,10);
+ const bySeat=new Map(visible.map((p,i)=>[i+1,p]));
+ const coords=classSeatPositions;
+ host.innerHTML=coords.map(([x,y],i)=>{
+  const seat=i+1,p=bySeat.get(seat),isMe=p&&(p.user_id||p.id)===user?.id;
+  return `<div class="class-seat-tag ${p?'occupied':'empty'} ${isMe?'my-seat':''}" style="left:${x}%;top:${y}%"><b>${seat}</b><span>${p?safe(p.name||'Học viên'):'Chỗ trống'}</span></div>`;
+ }).join('');
+ assignClassSeat();
+ const status=$('classRoomSeatStatus');
+ if(status)status.textContent=classSeatNo?`Chỗ của bạn: ${classSeatNo}/10`:(occupants.length>10?'Lớp đã đủ 10 chỗ':'Đang chờ chỗ trống');
+}
+function updateClassBoard(q,lesson,mode){
+ const title=$('classBoardMode'),count=$('classBoardCount'),question=$('classBoardQuestion'),opts=$('classBoardOptions');
+ if(!title||!count||!question||!opts)return;
+ title.textContent=mode+' · BÀI '+lesson;
+ count.textContent='CÂU '+(qpos+1)+' / '+qset.length+' · BÀI CÁ NHÂN';
+ question.textContent=q.question;
+ opts.innerHTML=q.options.map((o,i)=>`<span>${'ABCD'[i]}. ${safe(o)}</span>`).join('');
+}
 function enterPlace(p){currentPlace=p;$('mapScene').hidden=true;$('roomScene').hidden=false;let title='',inside='';
 const decor='<div class="wall"></div><div class="floor"></div><div class="window left"></div><div class="window right"></div>';
 if(p==='class'){title='LỚP HỌC IKIGAI';inside=`<div class="classroom-gunny-scene" role="group" aria-label="Lớp học IKIGAI">
-<img class="classroom-gunny-art" src="assets/ikigai-classroom-gunny.png" alt="Lớp học IKIGAI với thầy リー先生 và năm bảng chức năng">
+<img class="classroom-gunny-art" src="assets/ikigai-classroom-gunny-10seats.png" alt="Lớp học IKIGAI với mười chỗ ngồi và bảng câu hỏi">
+<div class="class-question-board" aria-live="polite"><div class="board-heading"><span id="classBoardMode">BẢNG HỌC TẬP IKIGAI</span><small id="classBoardCount">Chọn một chức năng bên phải</small></div><div id="classBoardQuestion">ようこそ！<br>Chọn Từ vựng, Ngữ pháp hoặc Kaiwa để bắt đầu.</div><div id="classBoardOptions"></div></div>
+<div class="class-seat-layer" id="classSeatLayer" aria-label="Danh sách mười chỗ ngồi"></div><div class="class-room-seat-status" id="classRoomSeatStatus">Đang xếp chỗ...</div>
 <button class="classroom-hotspot hs-vocabulary" data-action="vocabulary" aria-label="Từ vựng" title="Từ vựng"></button>
 <button class="classroom-hotspot hs-grammar" data-action="grammar" aria-label="Ngữ pháp" title="Ngữ pháp"></button>
 <button class="classroom-hotspot hs-kanji" data-action="kanji" aria-label="Kanji" title="Kanji"></button>
@@ -85,12 +131,12 @@ if(p==='arena'){title='ĐẤU TRƯỜNG IKIGAI';inside=`${decor}<div class="aren
 if(p==='gym'){title='PHÒNG GYM IKIGAI';inside=`${decor}<div class="gym-room-art"><div class="gym-motto">鍛錬 · DISCIPLINE · PROGRESS</div><div class="gym-mirror"></div><div class="gym-rack"><span>🏋️</span><small>POWER RACK</small></div><div class="gym-bike">🚴<small>CARDIO</small></div><div class="gym-dumbbells">🏋️‍♀️<small>TẠ TAY</small></div><div class="gym-medals">🏅 🥇 🏆<small>BẢNG THÀNH TÍCH</small></div><div class="gym-coach">💪<small>HUẤN LUYỆN VIÊN</small><b>「無理せず、続けよう！」</b></div><div class="room-actors">${roomCharacter(roomPos,'me')}</div><div class="speech-room">Cùng rèn luyện thể lực, an toàn và vừa sức nhé!</div><button class="room-action" data-action="gym">🏆 BẮT ĐẦU THỬ THÁCH</button>`}
 if(p==='tea'){title='PHÒNG GIÁM ĐỐC';inside=`${decor}<div class="tea-room-art"><div class="tea-window"><span>庭園 · 日本庭園</span></div><div class="tea-sign">茶道 · IKIGAI TEA HOUSE</div><div class="tea-shelf"><b>🍵</b><b>🫖</b><b>🏺</b><b>🍵</b><small>BỘ SƯU TẬP TRÀ</small></div><div class="tea-scroll">一期一会</div><div class="tea-host npc-tung" data-npc="tung"><div class="tung-head"><i class="tung-hair"></i><i class="tung-brow left"></i><i class="tung-brow right"></i><i class="tung-eye left"></i><i class="tung-eye right"></i><i class="tung-nose"></i><i class="tung-mouth"></i></div><div class="tung-body">👘</div><small>GIÁM ĐỐC · 店主</small><em>“Uống trà thì ngồi ngay ngắn.”</em></div><div class="tea-table"><span>急須</span><b>🍵</b><b>🍵</b><i>和菓子</i></div><div class="room-actors">${roomCharacter(roomPos,'me')}</div><div class="speech-room">“Uống trà với anh nhé.”</div><button class="room-action" data-action="tea">🍵 NGỒI UỐNG TRÀ</button>`}
 $('roomScene').innerHTML=`<header class="room-top"><strong>${title}</strong><div class="room-top-actions"><button id="roomChatToggle">💬 CHAT</button><button id="backMap">↩ VỀ BẢN ĐỒ</button></div></header><div class="interior interior-${p}">${inside}<div class="room-controls"><button data-dir="up">↑</button><button data-dir="left">←</button><button data-dir="down">↓</button><button data-dir="right">→</button></div>${roomFloatingNav(p)}</div>`;
-$('backMap').onclick=backMap;$('roomScene').querySelector('[data-nav-back]')?.addEventListener('click',backMap);$('roomChatToggle').onclick=()=>{$('chatbox').classList.toggle('open');$('chatInput').focus()};$('roomScene').querySelector('[data-npc="tung"]')?.addEventListener('click',()=>toast('Giám đốc: Ngồi xuống, cầm chén trà bằng hai tay nhé!'));
+if(p==='class'){renderClassSeats();}$('backMap').onclick=backMap;$('roomScene').querySelector('[data-nav-back]')?.addEventListener('click',backMap);$('roomChatToggle').onclick=()=>{$('chatbox').classList.toggle('open');$('chatInput').focus()};$('roomScene').querySelector('[data-npc="tung"]')?.addEventListener('click',()=>toast('Giám đốc: Ngồi xuống, cầm chén trà bằng hai tay nhé!'));
 $('roomScene').querySelectorAll('.room-actor').forEach(el=>el.onclick=()=>{const id=el.dataset.id;if(id==='me')toast('Đây là nhân vật của bạn!');else{const p=people[id];if(p){if(channel&&joined)channel.send({type:'broadcast',event:'bubble',payload:{user_id:user.id,target:id,text:'Xin chào! Cùng học nhé!'}});toast('Đã gửi lời chào đến '+p.name)}}});$('roomScene').querySelectorAll('[data-action]').forEach(b=>b.onclick=()=>roomAction(b.dataset.action));
 $('roomScene').querySelectorAll('[data-arena]').forEach(b=>b.onclick=()=>joinArenaQueue(b.dataset.arena));
 $('arenaReady')?.addEventListener('click',()=>setArenaReady(true));
 $('arenaCancel')?.addEventListener('click',leaveArenaQueue);
-$('roomScene').querySelectorAll('[data-dir]').forEach(b=>{b.onclick=()=>move(b.dataset.dir)});if(channel&&joined){channel.track(profile());channel.send({type:'broadcast',event:'scene',payload:{user_id:user.id,name:nickname,scene:'room',place:p}})}renderRoomPeers()}
+$('roomScene').querySelectorAll('[data-dir]').forEach(b=>{b.onclick=()=>move(b.dataset.dir)});if(channel&&joined){channel.track(profile());channel.send({type:'broadcast',event:'scene',payload:{user_id:user.id,name:nickname,scene:'room',place:p}})}renderRoomPeers();if(currentPlace==='class'){renderClassSeats();if(channel&&joined)channel.track(profile())}}
 
 function arenaPlayers(){
  if(!channel)return [];
@@ -140,7 +186,7 @@ function updateArenaLobby(){
  }
 }
 function renderRoomPeers(){const host=$('roomScene').querySelector('.room-actors');if(!host)return;host.querySelectorAll('.room-actor[data-peer="true"]').forEach(el=>el.remove());Object.values(people).filter(p=>p.scene==='room'&&p.place===currentPlace&&p.user_id!==user.id).forEach(p=>host.insertAdjacentHTML('beforeend',roomCharacter({x:p.roomX??50,y:p.roomY??70},p.user_id||p.id,p.name,p.role,p.gender,p.avatar)))}
-function backMap(){if(arenaMode)leaveArenaQueue();$('roomScene').hidden=true;$('mapScene').hidden=false;if(channel&&joined){channel.track(profile());channel.send({type:'broadcast',event:'scene',payload:{user_id:user.id,name:nickname,scene:'map',place:'map'}})}renderActors()}
+function backMap(){if(arenaMode)leaveArenaQueue();classSeatNo=null;$('roomScene').hidden=true;$('mapScene').hidden=false;if(channel&&joined){channel.track(profile());channel.send({type:'broadcast',event:'scene',payload:{user_id:user.id,name:nickname,scene:'map',place:'map'}})}renderActors()}
 async function loadBank(){try{const r=await fetch('assets/ikigai-n5-bank.json');if(!r.ok)throw Error('HTTP '+r.status);const d=await r.json();bank=d.questions||[];toast(`Đã nạp ngân hàng N5: ${bank.length} câu`)}catch(e){console.error(e);toast('Không tải được ngân hàng câu hỏi N5')}}
 
 const kaiwaStarter=[
@@ -156,6 +202,12 @@ const kaiwaStarter=[
 {lesson:5,question:'Aさん：いっしょに昼ご飯を食べませんか。 Bさん：＿＿＿。',options:['いいですね','いただきますでした','どなたですか','何階ですか'],correct:'A',explanation:'Lời mời 食べませんか có thể đáp lại いいですね。'}
 ];
 function openLessonPicker(group){
+ const boardTitle=$('classBoardMode'),boardCount=$('classBoardCount'),boardQuestion=$('classBoardQuestion'),boardOptions=$('classBoardOptions');
+ const groupLabel=group==='vocabulary'?'TỪ VỰNG':group==='grammar'?'NGỮ PHÁP':'KAIWA';
+ if(boardTitle)boardTitle.textContent=groupLabel+' · LỰA CHỌN CÁ NHÂN';
+ if(boardCount)boardCount.textContent='CHỈ HIỂN THỊ TRÊN MÀN HÌNH CỦA BẠN';
+ if(boardQuestion)boardQuestion.textContent='Hãy chọn bài học bạn muốn tự luyện tập.';
+ if(boardOptions)boardOptions.innerHTML='<span>Chọn một trong 25 bài bên dưới</span>';
  const a=$('activity');a.hidden=false;
  const label=group==='vocabulary'?'TỪ VỰNG':group==='grammar'?'NGỮ PHÁP':'KAIWA';
  a.innerHTML=`<button class="close-activity">×</button><small>IKIGAI LANGUAGE CLASS · リー先生</small><h2>CHỌN BÀI ${label}</h2><p>Chọn bài Minna no Nihongo muốn luyện tập.</p><div class="lesson-grid">${Array.from({length:25},(_,i)=>`<button data-lesson="${i+1}">Bài ${i+1}</button>`).join('')}</div>`;
@@ -172,6 +224,7 @@ function startLessonGame(group,lesson){
 function renderClassGame(lesson){
  const q=qset[qpos],correct='ABCD'.indexOf(q.correct),a=$('activity');
  const mode=activeGroup==='vocabulary'?'CHÉM HOA QUẢ · TỪ VỰNG':activeGroup==='grammar'?'ĐIỀN TỪ · NGỮ PHÁP':'KAIWA · HỘI THOẠI';
+ updateClassBoard(q,lesson,activeGroup==='vocabulary'?'TỪ VỰNG':activeGroup==='grammar'?'NGỮ PHÁP':'KAIWA');
  const fruits=['🍉','🍊','🍓','🍍'];
  a.hidden=false;
  a.innerHTML=`<button class="close-activity">×</button><small>IKIGAI · BÀI ${lesson} · CÂU ${qpos+1}/${qset.length}</small><h2>${mode}</h2><div class="progress"><i style="width:${qpos/qset.length*100}%"></i></div><div class="question">${safe(q.question)}</div><p class="fruit-instruction">${activeGroup==='vocabulary'?'Chọn và chém quả mang đáp án đúng!':activeGroup==='grammar'?'Chọn từ đúng nhất để hoàn thành câu.':'Chọn câu đáp lại phù hợp nhất.'}</p><div class="fruit-answer-grid">${q.options.map((o,i)=>`<button class="fruit-answer ${activeGroup==='vocabulary'?'fruit-mode':''}" data-opt="${i}"><span class="fruit-emoji">${fruits[i]}</span><b>${'ABCD'[i]}</b><span>${safe(o)}</span></button>`).join('')}</div><div class="feedback" id="feedback"></div><small class="muted">Điểm: ${score}</small>`;
