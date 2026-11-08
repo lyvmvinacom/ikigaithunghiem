@@ -1289,3 +1289,113 @@ html, body {
 }
 #roomScene.room-scene .interior-class .class-leaderboard,
 #roomScene.room-scene #classLeaderboard { display:none !important; }
+
+
+/* IKIGAI WORLD 9.8.5 — corrected seat label placement, opposite phone rotation, readable board */
+@media screen and (orientation: portrait) and (max-width: 900px) {
+  #roomScene.room-scene {
+    transform: translate(-50%, -50%) rotate(-90deg) !important;
+    -webkit-transform: translate(-50%, -50%) rotate(-90deg) !important;
+  }
+  #roomScene.room-scene .interior {
+    inset: 50px 0 0 !important;
+    width: 100% !important;
+    height: calc(100% - 50px) !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+  }
+  #roomScene.room-scene .interior-class,
+  #roomScene.room-scene .interior-class .classroom-gunny-scene {
+    overflow: hidden !important;
+    transform: none !important;
+  }
+  #roomScene.room-scene .interior-class .classroom-gunny-scene {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+  #roomScene.room-scene .interior-class .classroom-gunny-art {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: fill !important;
+    transform: none !important;
+  }
+
+  /* Fit the complete board content in the board frame, not a narrow strip. */
+  #roomScene.room-scene .interior-class .class-question-board {
+    left: 29% !important;
+    top: 13% !important;
+    width: 49% !important;
+    height: 43% !important;
+    padding: 1.2% 1.5% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    gap: 3px !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+  }
+  #roomScene.room-scene .interior-class .board-heading {
+    flex: 0 0 auto !important;
+    margin: 0 0 2px !important;
+    font-size: clamp(10px, 1.35vw, 15px) !important;
+  }
+  #roomScene.room-scene .interior-class #classBoardQuestion {
+    flex: 0 0 auto !important;
+    max-height: 35% !important;
+    overflow-y: auto !important;
+    margin: 1px 0 3px !important;
+    font-size: clamp(13px, 1.65vw, 19px) !important;
+    line-height: 1.2 !important;
+  }
+  #roomScene.room-scene .interior-class #classBoardOptions {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    width: 100% !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-auto-rows: minmax(30px, auto) !important;
+    align-content: start !important;
+    gap: 5px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    padding: 2px !important;
+    box-sizing: border-box !important;
+  }
+  #roomScene.room-scene .interior-class #classBoardOptions .board-choice {
+    min-width: 0 !important;
+    min-height: 30px !important;
+    height: auto !important;
+    padding: 5px 7px !important;
+    font-size: clamp(10px, 1.2vw, 14px) !important;
+    line-height: 1.15 !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+  }
+  #roomScene.room-scene .room-controls,
+  #roomScene.room-scene .class-room-seat-status,
+  #roomScene.room-scene .class-leaderboard,
+  #roomScene.room-scene #classLeaderboard {
+    display: none !important;
+  }
+}
+
+/* Nameplates are above each seated avatar, never across the face/body. */
+.interior-class .class-seat-avatar {
+  z-index: 24 !important;
+  width: clamp(60px, 7.2vw, 104px) !important;
+  height: clamp(104px, 17vh, 164px) !important;
+  transform: translate(-50%, -100%) !important;
+  object-fit: contain !important;
+  object-position: center bottom !important;
+}
+.interior-class .class-seat-tag {
+  z-index: 26 !important;
+  transform: translate(-50%, -50%) !important;
+  margin-top: -8% !important;
+  max-width: 16% !important;
+}
