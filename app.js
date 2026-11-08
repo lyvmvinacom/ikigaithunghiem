@@ -283,5 +283,37 @@ document.querySelectorAll('[data-quick]').forEach(b=>b.onclick=()=>{
 });
 $('logoutBtn').onclick=async()=>{if(client)await client.auth.signOut();if(channel)await client.removeChannel(channel);location.reload()};
 window.addEventListener('beforeunload',()=>{if(client&&channel)client.removeChannel(channel)});
+
+// Mobile orientation: never rotate the whole page with CSS. Prefer the device's
+// native landscape orientation lock where the browser permits it; otherwise
+// show a clear rotate-device guide rather than rendering the UI sideways.
+(function setupMobileLandscape(){
+ const guide=document.getElementById('mobileRotateGuide');
+ const lockButton=document.getElementById('tryLandscapeLock');
+ const mobile=()=>window.matchMedia('(max-width: 900px)').matches;
+ const portrait=()=>window.matchMedia('(orientation: portrait)').matches;
+ const sync=()=>{
+   if(!guide)return;
+   guide.hidden=!(mobile()&&portrait());
+ };
+ async function requestLandscape(){
+   try{
+     if(!document.fullscreenElement && document.documentElement.requestFullscreen){
+       await document.documentElement.requestFullscreen();
+     }
+   }catch(_){}
+   try{
+     if(screen.orientation && typeof screen.orientation.lock==='function'){
+       await screen.orientation.lock('landscape');
+     }
+   }catch(_){}
+   setTimeout(sync,250);
+ }
+ lockButton?.addEventListener('click',requestLandscape);
+ window.addEventListener('resize',sync,{passive:true});
+ window.addEventListener('orientationchange',()=>setTimeout(sync,150),{passive:true});
+ screen.orientation?.addEventListener?.('change',sync);
+ sync();
+})();
 save();updateAvatar();
 })();

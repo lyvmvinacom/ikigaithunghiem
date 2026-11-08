@@ -1113,123 +1113,75 @@ html, body {
 .interior-class .class-seat-tag{z-index:22}
 
 
-/* IKIGAI WORLD 9.5.8 — mobile landscape game stage + legible classroom board + clear seat nameplates */
-
-/* On portrait phones, rotate the complete game viewport as one stage.
-   This keeps room headers, dialogs, buttons and overlays in the same orientation. */
+/* IKIGAI WORLD 9.5.9 — native landscape orientation policy (no CSS rotation hacks) */
 @media screen and (max-width: 900px) and (orientation: portrait) {
-  html, body {
-    width: 100% !important;
-    height: 100% !important;
-    overflow: hidden !important;
-    overscroll-behavior: none;
+  html, body { width:100%; height:100%; overflow:hidden; overscroll-behavior:none; }
+  #game { position:fixed; inset:0; width:100vw; height:100dvh; transform:none!important; }
+  .mobile-rotate-guide {
+    position:fixed; inset:0; z-index:99999; display:flex; align-items:center;
+    justify-content:center; padding:28px; text-align:center;
+    color:#fff5d8; background:linear-gradient(145deg,#102c3b,#174c50);
   }
-  #game {
-    position: fixed !important;
-    left: 50% !important;
-    top: 50% !important;
-    width: 100dvh !important;
-    height: 100vw !important;
-    min-width: 0 !important;
-    min-height: 0 !important;
-    transform: translate(-50%, -50%) rotate(-90deg) !important;
-    transform-origin: center center !important;
-    overflow: hidden !important;
+  .mobile-rotate-guide[hidden] { display:none!important; }
+  .mobile-rotate-card {
+    width:min(420px,100%); padding:28px 22px; border:2px solid #e8bd70;
+    border-radius:22px; background:linear-gradient(145deg,#174b50,#102f3d);
+    box-shadow:0 12px 35px #0007;
   }
-  /* When a text field is focused, leave the viewport upright so the
-     native phone keyboard remains usable. */
-  #game:has(input:focus),
-  #game:has(textarea:focus),
-  #game:has([contenteditable="true"]:focus) {
-    width: 100vw !important;
-    height: 100dvh !important;
-    transform: none !important;
-    left: 0 !important;
-    top: 0 !important;
+  .mobile-rotate-icon { font-size:56px; line-height:1.2; margin-bottom:12px; }
+  .mobile-rotate-card h2 { margin:8px 0; color:#ffdb83; font-size:22px; }
+  .mobile-rotate-card p { margin:8px 0 18px; line-height:1.55; }
+  .mobile-rotate-card button {
+    border:0; border-radius:12px; padding:12px 20px; font-weight:900;
+    color:#402512; background:linear-gradient(#ffe49a,#e9a94f);
   }
 }
-
-/* Slightly taller learner sprites; keep the foot point anchored at the seat. */
-.interior-class .class-seat-avatar {
-  width: clamp(46px, 5.9vw, 86px) !important;
-  height: clamp(84px, 14.2vh, 140px) !important;
-  z-index: 23 !important;
-  transform: translate(-50%, -100%) !important;
-  object-fit: contain !important;
-  object-position: center bottom !important;
-}
-
-/* Put the nameplate above the sprite's head, not across the face or torso.
-   Its horizontal seat position remains unchanged. */
-.interior-class .class-seat-tag {
-  z-index: 25 !important;
-  transform: translate(-50%, -50%) !important;
-  margin-top: -10% !important;
-}
-
-/* Mobile game stage is landscape after rotation, so use readable answer
-   sizing while retaining the original board artwork boundaries. */
-@media screen and (max-width: 900px) {
+/* In real landscape orientation use the full usable viewport and safe areas. */
+@media screen and (max-width: 900px) and (orientation: landscape) {
+  html, body { width:100%; height:100%; overflow:hidden; }
+  #game { position:fixed; inset:0; width:100vw; height:100dvh; transform:none!important; }
+  .login { padding: max(8px,env(safe-area-inset-top)) max(10px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) max(10px,env(safe-area-inset-left)); }
+  .login-card { width:min(520px,92vw); max-height:94dvh; padding:clamp(10px,2.2dvh,18px); overflow-y:auto; }
+  .login-card .sakura-logo { font-size:clamp(22px,4dvh,34px); }
+  .login-card h1 { font-size:clamp(20px,4dvh,28px); }
+  .login-card>p { font-size:clamp(10px,1.8dvh,13px); margin:4px 0; }
+  .login-tabs { margin:8px 0; }
+  .login-card label { margin:5px 0 3px; }
+  .login-card input { padding:8px 10px; }
+  .gender-pick { margin:7px 0; }
+  .avatar-pick { margin:5px 0; }
+  .login-actions { gap:7px; }
+  .login-actions button,.login-card .full { padding:9px 12px; }
   .interior-class .class-question-board {
-    left: 33.8% !important;
-    top: 17.2% !important;
-    width: 42.2% !important;
-    height: 34.5% !important;
-    padding: 1.3% 1.6% !important;
-    justify-content: flex-start !important;
-    gap: 4px !important;
-  }
-  .interior-class .board-heading {
-    flex: 0 0 auto !important;
-    margin-bottom: 3px !important;
-    font-size: clamp(10px, 1.15vw, 15px) !important;
+    left:34.8%!important; top:17.2%!important; width:42.2%!important;
+    height:35%!important; padding:1.2% 1.5%!important;
+    justify-content:flex-start!important; gap:4px!important;
   }
   .interior-class #classBoardQuestion {
-    flex: 0 1 auto !important;
-    max-height: 34% !important;
-    overflow-y: auto !important;
-    margin: 2px 0 5px !important;
-    font-size: clamp(14px, 1.55vw, 20px) !important;
-    line-height: 1.25 !important;
+    flex:0 1 auto!important; max-height:34%!important; overflow:auto!important;
+    font-size:clamp(13px,1.8dvh,20px)!important; line-height:1.22!important;
   }
   .interior-class #classBoardOptions {
-    flex: 1 1 auto !important;
-    min-height: 0 !important;
-    max-height: none !important;
-    width: 100% !important;
-    display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    grid-auto-rows: minmax(34px, auto) !important;
-    align-content: start !important;
-    gap: 6px !important;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    padding: 3px !important;
-    box-sizing: border-box !important;
+    flex:1 1 auto!important; min-height:0!important; max-height:none!important;
+    display:grid!important; grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    align-content:start!important; grid-auto-rows:minmax(32px,auto)!important;
+    gap:6px!important; overflow:auto!important; padding:3px!important;
   }
   .interior-class #classBoardOptions .board-choice {
-    min-width: 0 !important;
-    min-height: 34px !important;
-    height: auto !important;
-    padding: 7px 9px !important;
-    font-size: clamp(11px, 1.15vw, 15px) !important;
-    line-height: 1.2 !important;
-    white-space: normal !important;
-    overflow-wrap: anywhere !important;
-    touch-action: manipulation !important;
+    min-height:32px!important; padding:6px 8px!important;
+    font-size:clamp(10px,1.5dvh,15px)!important; line-height:1.2!important;
+    white-space:normal!important; overflow-wrap:anywhere!important;
   }
   .interior-class .class-seat-avatar {
-    width: clamp(50px, 6.5vw, 92px) !important;
-    height: clamp(90px, 15.5vh, 146px) !important;
+    width:clamp(48px,6vw,88px)!important;
+    height:clamp(88px,15dvh,138px)!important;
+    z-index:23!important; transform:translate(-50%,-100%)!important;
   }
   .interior-class .class-seat-tag {
-    margin-top: -12% !important;
-    font-size: clamp(8px, .9vw, 12px) !important;
-    max-width: 18% !important;
+    z-index:25!important; margin-top:-11%!important;
+    font-size:clamp(8px,1.2dvh,12px)!important;
   }
-  /* Hide decorative keyboard arrows/status chips that waste screen area. */
-  .interior-class .room-controls,
-  .interior-class .class-room-seat-status {
-    display: none !important;
+  .interior-class .room-controls,.interior-class .class-room-seat-status {
+    display:none!important;
   }
 }
