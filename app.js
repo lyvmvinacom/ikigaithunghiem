@@ -118,12 +118,15 @@ if(p==='class'){title='LỚP HỌC IKIGAI';inside=`<div class="classroom-gunny-s
 <img class="classroom-gunny-art" src="assets/ikigai-classroom-gunny-10seats.png" alt="Lớp học IKIGAI với mười chỗ ngồi và bảng câu hỏi">
 <div class="class-question-board" aria-live="polite"><div class="board-heading"><span id="classBoardMode">BẢNG HỌC TẬP IKIGAI</span><small id="classBoardCount">Chọn một chức năng bên phải</small></div><div id="classBoardQuestion">ようこそ！<br>Chọn Từ vựng, Ngữ pháp hoặc Kaiwa để bắt đầu.</div><div id="classBoardOptions"></div></div>
 <div class="class-seat-layer" id="classSeatLayer" aria-label="Danh sách mười chỗ ngồi"></div><div class="class-room-seat-status" id="classRoomSeatStatus">Đang xếp chỗ...</div>
-<button class="classroom-hotspot hs-vocabulary" data-action="vocabulary" aria-label="Từ vựng" title="Từ vựng"></button>
-<button class="classroom-hotspot hs-grammar" data-action="grammar" aria-label="Ngữ pháp" title="Ngữ pháp"></button>
-<button class="classroom-hotspot hs-kanji" data-action="kanji" aria-label="Kanji" title="Kanji"></button>
-<button class="classroom-hotspot hs-kaiwa" data-action="kaiwa" aria-label="Kaiwa" title="Kaiwa"></button>
-<button class="classroom-hotspot hs-listening" data-action="listening" aria-label="Nghe hiểu" title="Nghe hiểu"></button>
-<div class="room-actors">${role==='teacher'?roomCharacter(roomPos,'me','リー先生','teacher'):''}</div>
+<nav class="classroom-function-menu" aria-label="Chức năng học tập">
+<button class="classroom-function-btn" data-action="vocabulary"><span class="classroom-function-icon">📖</span><span>Từ vựng</span></button>
+<button class="classroom-function-btn" data-action="grammar"><span class="classroom-function-icon">📝</span><span>Ngữ pháp</span></button>
+<button class="classroom-function-btn" data-action="kanji"><span class="classroom-function-icon">⛩️</span><span>Kanji</span></button>
+<button class="classroom-function-btn" data-action="kaiwa"><span class="classroom-function-icon">💬</span><span>Kaiwa</span></button>
+<button class="classroom-function-btn" data-action="listening"><span class="classroom-function-icon">🎧</span><span>Nghe hiểu</span></button>
+</nav>
+<img class="class-teacher-art" src="assets/characters/teacher_lee.png" alt="リー先生" draggable="false">
+<div class="room-actors"></div>
 </div>`}
 if(p==='n5'){title='PHÒNG LUYỆN THI N5';inside=`${decor}<div class="exam-room-art n5-art"><div class="banner">🌸 N5 · KHU LUYỆN THI CƠ BẢN</div><div class="exam-window">富士山 · SAKURA</div><div class="exam-podium">N5<small>日本語能力試験</small></div><div class="exam-bookcase">📚 📚 📚<small>GIÁO TRÌNH N5</small></div><div class="exam-headphones">🎧<small>NGHE HIỂU</small></div><div class="exam-scroll">ひらがな · カタカナ · 漢字</div><div class="room-actors">${roomCharacter(roomPos,'me')}</div>${roomStations(['vocabulary','grammar','kanji','reading','listening','mock'])}`}
 if(p==='n4'||p==='jft'){title=p==='n4'?'PHÒNG LUYỆN THI N4':'PHÒNG LUYỆN THI JFT';inside=`${decor}<div class="exam-room-art advanced-art"><div class="banner">${p==='n4'?'🏯 N4 · THỬ THÁCH TRUNG CẤP':'🎌 JFT-BASIC A2 · EXAM HALL'}</div><div class="exam-window">日本語 · CHALLENGE</div><div class="exam-podium">${p==='n4'?'N4':'A2'}<small>${p==='n4'?'日本語能力試験':'JFT-BASIC'}</small></div><div class="exam-bookcase">📚 📚 📚<small>THƯ VIỆN ĐỀ THI</small></div><div class="exam-headphones">🎧<small>LISTENING LAB</small></div><div class="exam-scroll">読む · 聞く · 書く · 話す</div><div class="room-actors">${roomCharacter(roomPos,'me')}</div>${roomStations(['vocabulary','grammar','kanji','reading','listening','mock'],true)}<div class="speech-room">Khu vực đang chờ ngân hàng đề riêng.</div>`}

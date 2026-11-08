@@ -952,3 +952,77 @@ html, body {
 @media(max-width:700px){
  .class-room-seat-status{bottom:1%;font-size:8px;padding:3px 8px}
 }
+
+
+/* IKIGAI WORLD 9.5.2 — restore independent teacher sprite and real function UI */
+.interior-class .classroom-function-menu{
+ position:absolute;z-index:35;right:1.1%;top:15%;width:13.8%;
+ display:flex;flex-direction:column;gap:1.05%;
+ padding:0;margin:0;background:transparent;border:0;box-shadow:none;
+}
+.interior-class .classroom-function-btn{
+ width:100%;min-height:clamp(42px,7.2vh,78px);
+ display:flex;align-items:center;justify-content:flex-start;gap:10px;
+ padding:7px 10px;border:2px solid #f7d27b;border-radius:15px;
+ background:linear-gradient(180deg,#fff0b6 0%,#f6c85e 48%,#df942b 100%);
+ color:#45230e;font-weight:1000;font-size:clamp(12px,1.15vw,19px);
+ text-shadow:0 1px 0 rgba(255,255,255,.75);
+ box-shadow:0 4px 0 #8b4c1c,0 7px 14px rgba(0,0,0,.34),inset 0 2px 3px rgba(255,255,255,.9);
+ cursor:pointer;touch-action:manipulation;
+}
+.interior-class .classroom-function-btn:hover,
+.interior-class .classroom-function-btn:focus-visible{
+ filter:brightness(1.12);transform:translateY(-2px);
+ outline:3px solid rgba(255,237,146,.72);outline-offset:1px;
+}
+.interior-class .classroom-function-btn:active{transform:translateY(2px);box-shadow:0 1px 0 #8b4c1c}
+.classroom-function-icon{width:1.8em;flex:0 0 1.8em;text-align:center;font-size:clamp(20px,2vw,32px);line-height:1}
+.class-teacher-art{
+ position:absolute;z-index:24;left:22.8%;top:39%;width:13.5%;height:31%;
+ object-fit:contain;object-position:center bottom;pointer-events:none;
+ filter:drop-shadow(0 5px 5px rgba(0,0,0,.28));
+}
+@media(max-width:760px){
+ .interior-class .classroom-function-menu{right:1%;top:18%;width:17%;gap:1.3%}
+ .interior-class .classroom-function-btn{min-height:clamp(34px,6.4vh,56px);padding:4px 5px;gap:4px;border-radius:10px;font-size:clamp(9px,1.65vw,13px);border-width:1px}
+ .classroom-function-icon{font-size:clamp(15px,2.6vw,21px);width:1.5em;flex-basis:1.5em}
+ .class-teacher-art{left:22%;top:42%;width:15%;height:28%}
+}
+@media(max-width:480px){
+ .interior-class .classroom-function-menu{width:18%;top:19%}
+ .interior-class .classroom-function-btn{min-height:35px;font-size:9px;padding:3px}
+ .class-teacher-art{left:20%;top:43%;width:16%;height:26%}
+}
+
+
+/* IKIGAI WORLD 9.5.3 — questions and lesson selection stay inside the green board */
+.interior-class .class-question-board{z-index:30}
+.interior-class #classBoardQuestion{font-size:clamp(13px,1.45vw,21px);margin:3px 0 7px}
+.interior-class #classBoardOptions{
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;
+ width:100%;max-height:55%;overflow-y:auto;overscroll-behavior:contain;
+ padding:2px 4px;box-sizing:border-box;
+}
+.interior-class .board-choice{
+ min-width:0;border:1px solid rgba(157,232,245,.85);border-radius:9px;
+ background:linear-gradient(180deg,rgba(22,119,145,.96),rgba(7,76,99,.96));
+ color:#fff8df;padding:6px 9px;font-size:clamp(9px,.95vw,14px);
+ line-height:1.2;font-weight:850;text-align:left;cursor:pointer;
+ box-shadow:0 2px 0 rgba(0,0,0,.24);touch-action:manipulation;
+}
+.interior-class .board-choice:hover{filter:brightness(1.18);border-color:#ffe18a}
+.interior-class .board-choice:disabled{opacity:.75;cursor:default}
+.interior-class .board-answer{display:flex;align-items:center;gap:6px;overflow-wrap:anywhere}
+.interior-class .board-answer.is-correct{background:linear-gradient(180deg,#287c55,#14563b);border:2px solid #a5f0a9}
+.interior-class .board-answer.is-wrong{background:linear-gradient(180deg,#9a4540,#6c2929);border:2px solid #ffaaa0}
+.interior-class .lesson-choice{min-height:30px;text-align:center;justify-content:center}
+.interior-class .board-next{grid-column:1/-1;text-align:center;background:linear-gradient(180deg,#f5cf69,#bd7a22);color:#39200b;border-color:#ffe8a2}
+.interior-class .board-feedback{grid-column:1/-1;min-height:18px;text-align:center;font-weight:900;font-size:clamp(9px,.9vw,13px);padding:3px}
+.interior-class .board-feedback.good{color:#b9ffc8}
+.interior-class .board-feedback.bad{color:#ffc2ae}
+.interior-class .board-result-note{grid-column:1/-1;color:#fff4d3;text-align:center;font-size:clamp(9px,.9vw,13px);margin:3px}
+.interior-class .activity[hidden]{display:none!important}
+@media(max-width:700px){
+ .interior-class #classBoardOptions{gap:4px;max-height:58%}
+ .interior-class .board-choice{font-size:9px;padding:5px 6px}
+}
