@@ -1103,3 +1103,11 @@ html, body {
  scroll-padding-top:4px;
 }
 .interior-class #classBoardOptions .lesson-choice{align-self:start}
+
+
+/* IKIGAI WORLD 9.5.7 — align learner sprite with the occupied desk/chair */
+.interior-class .class-seat-avatar{
+ transform:translate(-50%,-100%);
+ object-position:center bottom;
+}
+.interior-class .class-seat-tag{z-index:22}

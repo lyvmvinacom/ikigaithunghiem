@@ -96,7 +96,7 @@ function renderClassSeats(){
  const occupants=currentClassOccupants().slice(0,10);
  host.innerHTML=classSeatPositions.map(([x,y],i)=>{
   const seat=i+1,p=occupants[i],isMe=p&&(p.user_id||p.id)===user?.id;
-  const avatarHTML=p?`<img class="class-seat-avatar" src="${asset(p.gender||'male',p.avatar||0)}" alt="" style="left:${x}%;top:${y-7}%">`:'';
+  const avatarHTML=p?`<img class="class-seat-avatar" src="${asset(p.gender||'male',p.avatar||0)}" alt="" style="left:${x}%;top:${y}%">`:'';
   return `${avatarHTML}<div class="class-seat-tag ${p?'occupied':'empty'} ${isMe?'my-seat':''}" style="left:${x}%;top:${y}%"><b>${seat}</b><span>${p?safe(p.name||'Học viên'):'Chỗ trống'}</span></div>`;
  }).join('');
  assignClassSeat();
